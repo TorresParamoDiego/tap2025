@@ -1,9 +1,8 @@
 package com.example.tap2025;
 
+import com.example.tap2025.vistas.Calculadora;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -22,15 +21,16 @@ public class HelloApplication extends Application {
     private Scene escena;
     void creaUI(){
         mitCalculadora = new MenuItem("Calculadora");
+        mitCalculadora.setOnAction(event -> new Calculadora());
         menCompetencia1 = new Menu("Competencia 1");
         menCompetencia1.getItems().addAll(mitCalculadora);
         mnbPrincipal=new MenuBar();
         mnbPrincipal.getMenus().addAll(menCompetencia1);
-        vBox = new VBox();
+        vBox = new VBox(mnbPrincipal);
     }
     @Override
     public void start(Stage stage) throws IOException {
-
+        creaUI();
         stage.setTitle("Hola Mundo de Eventos :)");
         stage.setScene(new Scene(vBox));
         stage.show();
@@ -39,6 +39,9 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+    void clickEvent(){
+        System.out.println("a");
     }
 }
 /*
