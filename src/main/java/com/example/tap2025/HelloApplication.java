@@ -2,6 +2,7 @@ package com.example.tap2025;
 
 import com.example.tap2025.Modelos.Conexion;
 import com.example.tap2025.vistas.Calculadora;
+import com.example.tap2025.vistas.ListaClientes;
 import com.example.tap2025.vistas.VentasRestaurante;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -25,7 +26,7 @@ public class HelloApplication extends Application {
         mitCalculadora = new MenuItem("Calculadora");
         mitRestaurante = new MenuItem("Restaurante");
         mitCalculadora.setOnAction(event -> new Calculadora());
-        mitRestaurante.setOnAction(event -> {new VentasRestaurante();});
+        mitRestaurante.setOnAction(event -> {new ListaClientes();});
         menCompetencia1 = new Menu("Competencia 1");
         menCompetencia1.getItems().addAll(mitCalculadora,mitRestaurante);
         mnbPrincipal=new MenuBar();
