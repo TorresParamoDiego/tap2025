@@ -147,4 +147,3 @@ public class Calculadora extends Stage {
         this.show();
     }
 }
-
