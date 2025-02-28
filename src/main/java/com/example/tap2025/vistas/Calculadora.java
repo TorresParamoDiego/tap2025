@@ -59,14 +59,14 @@ public class Calculadora extends Stage {
             case "/":
             case "+":
             case "-":
-                if(!txtDisplay.getText().equals("ERROR")) {
+                if(!txtDisplay.getText().equals("ERROR")&&!txtDisplay.getText().equals(".")) {
                     operacion = tecla;
                     numero1 = Float.parseFloat(txtDisplay.getText());
                     txtDisplay.setText("0");
                 }
                 break;
             case "=":
-                if(!txtDisplay.getText().equals("ERROR")) {
+                if(!txtDisplay.getText().equals("ERROR")&&!txtDisplay.equals(".")) {
                     numero2 = Float.parseFloat(txtDisplay.getText());
                     decidirOperacion();
                     if (!txtDisplay.getText().equals("ERROR"))
