@@ -1,15 +1,14 @@
 package com.example.tap2025.vistas;
 
+import com.example.tap2025.Componentes.ButtonCell;
 import com.example.tap2025.Modelos.ClientesDAO;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ListaClientes extends Stage {
 
@@ -33,7 +32,7 @@ public class ListaClientes extends Stage {
         tlbMenu = new ToolBar(btnAgregar);
         crearTabla();
         vBox = new VBox(tlbMenu,tblClientes);
-        escena = new Scene(vBox,500,500);
+        escena = new Scene(vBox,600,500);
     }
     private void crearTabla(){
         ClientesDAO objC = new ClientesDAO();
@@ -49,12 +48,31 @@ public class ListaClientes extends Stage {
         TableColumn<ClientesDAO,String> tbcEmailCte= new TableColumn<>("Email");
         tbcEmailCte.setCellValueFactory(new PropertyValueFactory<>("emailCte"));
 
-        tblClientes.getColumns().addAll(tbcNomCte,tbcDireccion,tbcTelCte,tbcEmailCte);
+        TableColumn tbcEditar= new TableColumn<>("Editar");
+        tbcEditar.setCellFactory(new Callback<TableColumn, TableCell>() {
+            @Override
+            public TableCell call(TableColumn tableColumn) {
+                return new ButtonCell("Editar");
+            }
+        });
+
+        TableColumn tbcEliminar= new TableColumn<>("Eliminar");
+        tbcEliminar.setCellFactory(new Callback<TableColumn, TableCell>() {
+            @Override
+            public TableCell call(TableColumn tableColumn) {
+                return new ButtonCell("Eliminar");
+            }
+        });
+
+        tblClientes.getColumns().addAll(tbcNomCte,tbcDireccion,tbcTelCte,tbcEmailCte,tbcEditar,tbcEliminar);
         tblClientes.setItems(objC.SELECT());
+
+
     }
 }
 /*
 PropertyValueFactory
 Callback cuando se ejecuta una accion desencadena una accion al terminar
+TableCell, padre de las celdas
  */
 

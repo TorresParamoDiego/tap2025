@@ -30,13 +30,14 @@ public class Rompecabezas extends Stage {
         menuBar.getMenus().addAll(menu);
         escena=new Scene(menuBar,800,600);
     }
-    private void creaRompecabezas(int tamaño){
-        switch (tamaño){
+    private void creaRompecabezas(int tamano){
+        switch (tamano){
             case 1:{
 
             }
             break;
             case 2: {
+
 
             }
             break;
