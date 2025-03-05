@@ -3,6 +3,7 @@ package com.example.tap2025;
 import com.example.tap2025.Modelos.Conexion;
 import com.example.tap2025.vistas.Calculadora;
 import com.example.tap2025.vistas.ListaClientes;
+import com.example.tap2025.vistas.Rompecabezas;
 import com.example.tap2025.vistas.VentasRestaurante;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -19,15 +20,17 @@ public class HelloApplication extends Application {
     private VBox vBox;
     private MenuBar mnbPrincipal;
     private Menu menCompetencia1,menCompetencia2;
-    private MenuItem mitCalculadora,mitRestaurante;
+    private MenuItem mitCalculadora,mitRestaurante,mitRompecabezas;
     private Scene escena;
     void creaUI(){
         mitCalculadora = new MenuItem("Calculadora");
         mitRestaurante = new MenuItem("Restaurante");
+        mitRompecabezas = new MenuItem("Rompecabezas");
         mitCalculadora.setOnAction(event -> new Calculadora());
         mitRestaurante.setOnAction(event -> {new ListaClientes();});
+        mitRompecabezas.setOnAction(event -> {new Rompecabezas();});
         menCompetencia1 = new Menu("Competencia 1");
-        menCompetencia1.getItems().addAll(mitCalculadora,mitRestaurante);
+        menCompetencia1.getItems().addAll(mitCalculadora,mitRestaurante,mitRompecabezas);
         mnbPrincipal=new MenuBar();
         mnbPrincipal.getMenus().addAll(menCompetencia1);
         vBox = new VBox(mnbPrincipal);

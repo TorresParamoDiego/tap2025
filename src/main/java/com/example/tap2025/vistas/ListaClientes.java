@@ -26,10 +26,11 @@ public class ListaClientes extends Stage {
         this.show();
     }
     private void creaUI() {
+        tblClientes = new TableView<>();
         btnAgregar = new Button();
+        btnAgregar.setOnAction(event -> new Cliente(tblClientes));
         btnAgregar.setGraphic(new ImageView(getClass().getResource("/Images/boton.jpg").toString()));
         tlbMenu = new ToolBar(btnAgregar);
-        tblClientes = new TableView<>();
         crearTabla();
         vBox = new VBox(tlbMenu,tblClientes);
         escena = new Scene(vBox,500,500);

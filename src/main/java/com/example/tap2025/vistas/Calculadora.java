@@ -66,7 +66,7 @@ public class Calculadora extends Stage {
                 }
                 break;
             case "=":
-                if(!txtDisplay.getText().equals("ERROR")&&!txtDisplay.equals(".")) {
+                if(!txtDisplay.getText().equals("ERROR")&&!txtDisplay.getText().equals(".")) {
                     numero2 = Float.parseFloat(txtDisplay.getText());
                     decidirOperacion();
                     if (!txtDisplay.getText().equals("ERROR"))
