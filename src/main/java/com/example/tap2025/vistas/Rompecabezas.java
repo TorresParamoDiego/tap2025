@@ -1,16 +1,20 @@
 package com.example.tap2025.vistas;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.Random;
+import java.util.*;
 
 public class Rompecabezas extends Stage {
     Scene escena;
@@ -104,6 +108,7 @@ public class Rompecabezas extends Stage {
         imagen.setOnMouseDragReleased(event -> {
             if (origen != null && origen != imagen) {
                 intePosicion(origen, imagen);
+                validacion();
             }
         });
     }
@@ -119,18 +124,81 @@ public class Rompecabezas extends Stage {
         GridPane.setRowIndex(img2, ren1);
 
         origen = null;
+
     }
     private void validacion() {
         ImageView imagen;
         int nColumns = grid.getColumnCount();
         int nRows = grid.getRowCount();
-        int columna = 0;
-        int fila = 0;
-        for (int i = 0; i < grid.getChildren().size(); i++) {
-            if(grid.getChildren().get(i) instanceof ImageView){
-                imagen = (ImageView) grid.getChildren().get(i);
-            }
-            //if(imagen.getImage().getUrl())
+        int columna = 1;
+        String url="";
+        int fila = 1;
+        int cont = 0;
+        boolean bandera = true;
+        GridPaneUtils.ordenarChildren(grid);
+        while(cont<grid.getChildren().size()&&bandera){
+            url ="row-"+fila+"-column-"+columna+".jpg";
+            if(grid.getChildren().get(cont) instanceof ImageView){
+                imagen = (ImageView) grid.getChildren().get(cont);
+                if(!imagen.getImage().getUrl().contains(url)){
+                    bandera=false;
+                }
         }
+            if(columna<nColumns){
+                columna++;
+            }
+            else {
+                fila++;
+                columna=1;
+                if(fila>nRows)
+                    fila=1;
+            }
+            cont++;
+        }
+        if(bandera){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Felicidades lo resolviste");
+            alert.setHeaderText("Lo lograste, da click en aceptar para salir y empezar un nuevo reto");
+
+            alert.setOnCloseRequest(event -> {
+                grid.getChildren().clear();
+            });
+            alert.showAndWait().ifPresent(response -> {
+                grid.getChildren().clear();
+            });
+        }
+    }
+}
+
+
+
+class GridPaneUtils {
+    public static void ordenarChildren(GridPane gridPane) {
+        // Copia de la lista para evitar modificar directamente el ObservableList
+        ArrayList<Node> childrenList = new ArrayList<>(gridPane.getChildren());
+
+        int n = childrenList.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                Node nodeA = childrenList.get(j);
+                Node nodeB = childrenList.get(j + 1);
+
+                int colA = (GridPane.getColumnIndex(nodeA) != null) ? GridPane.getColumnIndex(nodeA) : 0;
+                int rowA = (GridPane.getRowIndex(nodeA) != null) ? GridPane.getRowIndex(nodeA) : 0;
+                int colB = (GridPane.getColumnIndex(nodeB) != null) ? GridPane.getColumnIndex(nodeB) : 0;
+                int rowB = (GridPane.getRowIndex(nodeB) != null) ? GridPane.getRowIndex(nodeB) : 0;
+
+                // Comparación por fila, luego por columna
+                if ((rowA > rowB) || (rowA == rowB && colA > colB)) {
+                    Node temp = childrenList.get(j);
+                    childrenList.set(j, childrenList.get(j + 1));
+                    childrenList.set(j + 1, temp);
+                }
+            }
+        }
+
+        // Reemplazar la lista ordenada en el GridPane
+        ObservableList<Node> newChildren = FXCollections.observableArrayList(childrenList);
+        gridPane.getChildren().setAll(newChildren);
     }
 }
