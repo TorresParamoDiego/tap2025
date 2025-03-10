@@ -1,6 +1,7 @@
 package com.example.tap2025.Componentes;
 
 import com.example.tap2025.Modelos.ClientesDAO;
+import com.example.tap2025.vistas.Cliente;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -27,7 +28,7 @@ public class ButtonCell extends TableCell<ClientesDAO,String>{
     private void eventoBoton(){
         ClientesDAO objC=this.getTableView().getItems().get(this.getIndex());
         if(strLableBtn.equals("Editar")){
-
+            new Cliente(this.getTableView(),objC);
         }
         else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

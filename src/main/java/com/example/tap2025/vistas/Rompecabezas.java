@@ -2,13 +2,13 @@ package com.example.tap2025.vistas;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -101,6 +101,12 @@ public class Rompecabezas extends Stage {
         }
     }
     private void anadirEventoImagen(ImageView imagen){
+        imagen.setOnMouseEntered(event -> {
+            imagen.setCursor(Cursor.HAND);
+        });
+        imagen.setOnMouseDragged(event -> {
+            imagen.setCursor(Cursor.CLOSED_HAND);
+        });
         imagen.setOnDragDetected(e -> {
             origen = imagen;
             imagen.startFullDrag();
@@ -123,7 +129,7 @@ public class Rompecabezas extends Stage {
         GridPane.setColumnIndex(img2, col1);
         GridPane.setRowIndex(img2, ren1);
 
-        origen = null;
+        //origen = null;
 
     }
     private void validacion() {
@@ -131,11 +137,11 @@ public class Rompecabezas extends Stage {
         int nColumns = grid.getColumnCount();
         int nRows = grid.getRowCount();
         int columna = 1;
-        String url="";
+        String url;
         int fila = 1;
         int cont = 0;
         boolean bandera = true;
-        GridPaneUtils.ordenarChildren(grid);
+        GridPaneOrdenador.ordenarChildren(grid);
         while(cont<grid.getChildren().size()&&bandera){
             url ="row-"+fila+"-column-"+columna+".jpg";
             if(grid.getChildren().get(cont) instanceof ImageView){
@@ -162,9 +168,11 @@ public class Rompecabezas extends Stage {
 
             alert.setOnCloseRequest(event -> {
                 grid.getChildren().clear();
+                escena.setCursor(Cursor.DEFAULT);
             });
             alert.showAndWait().ifPresent(response -> {
                 grid.getChildren().clear();
+                escena.setCursor(Cursor.DEFAULT);
             });
         }
     }
@@ -172,7 +180,7 @@ public class Rompecabezas extends Stage {
 
 
 
-class GridPaneUtils {
+class GridPaneOrdenador {
     public static void ordenarChildren(GridPane gridPane) {
         // Copia de la lista para evitar modificar directamente el ObservableList
         ArrayList<Node> childrenList = new ArrayList<>(gridPane.getChildren());

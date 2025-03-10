@@ -16,10 +16,19 @@ public class Cliente extends Stage {
     private Scene escena;
     private ClientesDAO objC;
     private TableView tblCliente;
-    public Cliente(TableView tblCliente) {
+    public Cliente(TableView tblCliente,ClientesDAO objC) {
         this.tblCliente = tblCliente;
-        objC = new ClientesDAO();
         creaUI();
+        if(objC == null) {
+            this.objC = new ClientesDAO();
+        }
+        else {
+            this.objC = objC;
+            txtNomCte.setText(objC.getNomCte());
+            txtDireccion.setText(objC.getDireccion());
+            txtTelCte.setText(objC.getTelCte());
+            txtEmail.setText(objC.getEmailCte());
+        }
         this.setTitle("Registrar cliente");
         this.setScene(escena);
         this.show();
@@ -33,13 +42,19 @@ public class Cliente extends Stage {
         txtTelCte.setPromptText("Telefono");
         txtEmail = new TextField();
         txtEmail.setPromptText("Email");
+
         btnGuardar = new Button("Guardar");
         btnGuardar.setOnAction(event -> {
             objC.setNomCte(txtNomCte.getText());
             objC.setDireccion(txtDireccion.getText());
             objC.setTelCte(txtTelCte.getText());
             objC.setEmailCte(txtEmail.getText());
-            objC.INSERT();
+
+            if(objC.getIdCte()>0)
+                objC.UPDATE();
+            else
+                objC.INSERT();
+
             tblCliente.setItems(objC.SELECT());
             tblCliente.refresh();
             this.close();
