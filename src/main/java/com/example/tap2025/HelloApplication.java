@@ -1,5 +1,6 @@
 package com.example.tap2025;
 
+import com.example.tap2025.Componentes.Hilo;
 import com.example.tap2025.Modelos.Conexion;
 import com.example.tap2025.vistas.Calculadora;
 import com.example.tap2025.vistas.ListaClientes;
@@ -39,6 +40,11 @@ public class HelloApplication extends Application {
     }
     @Override
     public void start(Stage stage) throws IOException {
+        new Hilo("Ruta Pinos").start();
+        new Hilo("Ruta Laureles").start();
+        new Hilo("Ruta San Juan de la Vega").start();
+        new Hilo("Ruta Teneria").start();
+        new Hilo("Ruta Monteblanco").start();
         Conexion.createConnection();
         creaUI();
         stage.setTitle("Hola Mundo de Eventos :)");

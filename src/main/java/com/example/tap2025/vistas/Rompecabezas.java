@@ -13,8 +13,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.util.ArrayList;
+import java.util.Random;
 
-import java.util.*;
 
 public class Rompecabezas extends Stage {
     Scene escena;
@@ -73,11 +74,11 @@ public class Rompecabezas extends Stage {
             }
             break;
             case 3: {
-                maxContador = 16;
-                maxI = 5;
-                maxj = 5;
-                maxK = 4;
-                rompecabeza = "/Images/Rompecabezas2/row-";
+                maxContador = 25;
+                maxI = 6;
+                maxj = 6;
+                maxK = 5;
+                rompecabeza = "/Images/Rompecabezas3/row-";
                 imagenes = new ImageView[5][5];
             }
             break;
@@ -86,7 +87,8 @@ public class Rompecabezas extends Stage {
             i=r.nextInt(1,maxI);
             j=r.nextInt(1,maxj);
             if(imagenes[i-1][j-1]==null) {
-                imagenes[i - 1][j - 1] = new ImageView(getClass().getResource(rompecabeza + i + "-column-" + j + ".jpg").toString());
+                imagenes[i - 1][j - 1] = new ImageView(getClass().getResource(rompecabeza + i +
+                        "-column-" + j + ".jpg").toString());
                 anadirEventoImagen(imagenes[i - 1][j - 1]);
                 if (k < maxK) {
                     grid.add(imagenes[i - 1][j - 1], k, l);
@@ -162,19 +164,22 @@ public class Rompecabezas extends Stage {
             cont++;
         }
         if(bandera){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Felicidades lo resolviste");
-            alert.setHeaderText("Lo lograste, da click en aceptar para salir y empezar un nuevo reto");
-
-            alert.setOnCloseRequest(event -> {
-                grid.getChildren().clear();
-                escena.setCursor(Cursor.DEFAULT);
-            });
-            alert.showAndWait().ifPresent(response -> {
-                grid.getChildren().clear();
-                escena.setCursor(Cursor.DEFAULT);
-            });
+            m_creaAlerta();
         }
+    }
+    void m_creaAlerta(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Felicidades lo resolviste");
+        alert.setHeaderText("Lo lograste, da click en aceptar para salir y empezar un nuevo reto");
+
+        alert.setOnCloseRequest(event -> {
+            grid.getChildren().clear();
+            escena.setCursor(Cursor.DEFAULT);
+        });
+        alert.showAndWait().ifPresent(response -> {
+            grid.getChildren().clear();
+            escena.setCursor(Cursor.DEFAULT);
+        });
     }
 }
 
