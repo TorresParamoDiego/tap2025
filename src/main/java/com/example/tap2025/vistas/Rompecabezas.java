@@ -1,20 +1,25 @@
 package com.example.tap2025.vistas;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Rompecabezas extends Stage {
@@ -25,8 +30,12 @@ public class Rompecabezas extends Stage {
     GridPane grid;
     VBox vbox;
     ImageView origen;
+    Cronometro cronometro;
+    PrintWriter archivoResult;
+    String nivel;
     public Rompecabezas() {
         creaIU();
+        cronometro = new Cronometro();
         this.setTitle("Rompecabezas");
         this.setScene(escena);
         this.show();
@@ -45,6 +54,7 @@ public class Rompecabezas extends Stage {
         grid=new GridPane();
         vbox=new VBox(menuBar,grid);
         escena=new Scene(vbox,500,301);
+
     }
     private void creaRompecabezas(int tamano) {
         grid.getChildren().clear();
@@ -62,6 +72,7 @@ public class Rompecabezas extends Stage {
                 maxK = 2;
                 rompecabeza = "/Images/Rompecabezas1/row-";
                 imagenes = new ImageView[3][2];
+                nivel="Pequeño";
             }
             break;
             case 2: {
@@ -71,6 +82,7 @@ public class Rompecabezas extends Stage {
                 maxK = 4;
                 rompecabeza = "/Images/Rompecabezas2/row-";
                 imagenes = new ImageView[4][4];
+                nivel="Mediano";
             }
             break;
             case 3: {
@@ -80,6 +92,7 @@ public class Rompecabezas extends Stage {
                 maxK = 5;
                 rompecabeza = "/Images/Rompecabezas3/row-";
                 imagenes = new ImageView[5][5];
+                nivel="Grande";
             }
             break;
         }
@@ -101,6 +114,10 @@ public class Rompecabezas extends Stage {
                 contador++;
             }
         }
+        cronometro.show();
+        cronometro.setX(0);
+        cronometro.setY(0);
+        cronometro.iniciar();
     }
     private void anadirEventoImagen(ImageView imagen){
         imagen.setOnMouseEntered(event -> {
@@ -164,8 +181,25 @@ public class Rompecabezas extends Stage {
             cont++;
         }
         if(bandera){
+            cronometro.detener();
+            try {
+                anadirArchivo();
+            }catch(Exception e){
+                e.printStackTrace();
+                System.out.println("no se puede anadir archivo");
+            }
             m_creaAlerta();
+            cronometro.reiniciar();
+            cronometro.close();
         }
+    }
+    public void abreArchivo() throws IOException {
+        archivoResult = new PrintWriter(new FileWriter("C:\\Users\\52461\\IdeaProjects\\tap2025\\src\\main\\resources\\Archivos\\ResultadosRompecabezas.txt",true));
+    }
+    public void anadirArchivo() throws IOException {
+        abreArchivo();
+        archivoResult.println(nivel+": "+cronometro.getTiempo());
+        archivoResult.close();
     }
     void m_creaAlerta(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -213,5 +247,45 @@ class GridPaneOrdenador {
         // Reemplazar la lista ordenada en el GridPane
         ObservableList<Node> newChildren = FXCollections.observableArrayList(childrenList);
         gridPane.getChildren().setAll(newChildren);
+    }
+}
+class Cronometro extends Stage{
+    Timeline timeline;
+    Scene scene;
+    Label tiempo;
+    Label txtTiempo;
+    HBox hbox;
+    private int segundos;
+    public void creaUi(){
+        txtTiempo = new Label("Tiempo: ");
+        tiempo = new Label();
+        hbox = new HBox();
+        hbox.getChildren().addAll(txtTiempo,tiempo);
+        scene = new Scene(hbox, 200, 100);
+        this.setScene(scene);
+    }
+    public Cronometro() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            segundos++;
+            tiempo.setText(segundos+" segundos");
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+
+        creaUi();
+    }
+    public String getTiempo(){
+        return tiempo.getText();
+    }
+    public void iniciar() {
+        tiempo.setText("");
+        segundos=0;
+        timeline.play();
+    }
+    public void detener(){
+        timeline.pause();
+    }
+    public void reiniciar() {
+        segundos = 0;
+        timeline.stop();
     }
 }
