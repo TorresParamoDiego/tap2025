@@ -1,2 +1,15 @@
 Pequeño: 3 segundos
 Pequeño: 4 segundos
+Grande: 54 segundos
+Mediano: 34 segundos
+Pequeño: 8 segundos
+Mediano: 22 segundos
+Mediano: 29 segundos
+Grande: 69 segundos
+Grande: 76 segundos
+Pequeño: 6 segundos
+Grande: 57 segundos
+Pequeño: 62 segundos
+Mediano: 175 segundos
+Grande: 198 segundos
+Mediano: 23 segundos
