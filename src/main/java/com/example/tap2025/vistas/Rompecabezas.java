@@ -100,8 +100,8 @@ public class Rompecabezas extends Stage {
             i=r.nextInt(1,maxI);
             j=r.nextInt(1,maxj);
             if(imagenes[i-1][j-1]==null) {
-                imagenes[i - 1][j - 1] = new ImageView(getClass().getResource(rompecabeza + i +
-                        "-column-" + j + ".jpg").toString());
+                imagenes[i - 1][j - 1] = new ImageView(getClass().getResource(
+                        rompecabeza + i + "-column-" + j + ".jpg").toString());
                 anadirEventoImagen(imagenes[i - 1][j - 1]);
                 if (k < maxK) {
                     grid.add(imagenes[i - 1][j - 1], k, l);
@@ -175,8 +175,7 @@ public class Rompecabezas extends Stage {
             else {
                 fila++;
                 columna=1;
-                if(fila>nRows)
-                    fila=1;
+
             }
             cont++;
         }
@@ -195,7 +194,9 @@ public class Rompecabezas extends Stage {
     }
 
     private void abreArchivo() throws IOException {
-        archivoResult = new PrintWriter(new FileWriter("C:\\Users\\52461\\IdeaProjects\\tap2025\\src\\main\\resources\\Archivos\\ResultadosRompecabezas.txt",true));
+        archivoResult = new PrintWriter(new FileWriter("C:\\Users\\52461\\" +
+                "IdeaProjects\\tap2025\\src\\main\\resources\\Archivos\\" +
+                "ResultadosRompecabezas.txt",true));
     }
 
     private void anadirArchivo() throws IOException {
@@ -264,7 +265,8 @@ class Cronometro extends Stage{
         this.setScene(scene);
     }
     public Cronometro() {
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1),
+                event -> {
             segundos++;
             tiempo.setText(segundos+" segundos");
         }));
