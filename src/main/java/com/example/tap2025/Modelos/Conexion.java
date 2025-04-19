@@ -9,7 +9,8 @@ public class Conexion {
     static private String USER = "admin";
     static private String PWD = "1234";
     static private String HOST = "localhost"; // 127.0.0.1 (loopback)
-    static private String PORT = "3306"; //puerto de mysql o mariadb
+    static private String PORT = "3306";//puerto de mysql o mariadb
+
     public static Connection connection; //para la conexion
 
     public static void createConnection() {//para aperturar la conexion a la BD

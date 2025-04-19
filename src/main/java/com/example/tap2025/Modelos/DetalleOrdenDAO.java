@@ -1,5 +1,11 @@
 package com.example.tap2025.Modelos;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class DetalleOrdenDAO {
     private int idOrden;
     private int idProducto;
@@ -18,5 +24,58 @@ public class DetalleOrdenDAO {
 
     public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
+    }
+    public void INSERT(){
+        String query="INSERT INTO DetalleOrden (idOrden,idProducto) " +
+                "values('"+idOrden+"','"+idProducto+"')";
+        //instanciar un statement
+        try{
+            Statement stmt=Conexion.connection.createStatement();
+            stmt.executeUpdate(query);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void UPDATE(){
+        String query="UPDATE DetalleOrden SET idOrden = '"+idOrden+"'," +
+                "idProducto = '"+idProducto+
+                "' WHERE idOrden ="+idOrden+" AND idProducto = "+idProducto;
+        try{
+            Statement stmt=Conexion.connection.createStatement();
+            stmt.executeUpdate(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void DELETE(){
+        String query="DELETE FROM DetalleOrden where idProducto = "+idProducto+"" +
+                " and idOrden = "+idOrden;
+        try {
+            Statement stmt=Conexion.connection.createStatement();
+            stmt.executeUpdate(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public ObservableList<DetalleOrdenDAO> SELECT(){
+        String query="SELECT * FROM DetalleOrden";
+        ObservableList<DetalleOrdenDAO> listaDO= FXCollections.observableArrayList();
+        //El observable list se retornara cuando se llene
+        DetalleOrdenDAO objetoDO;
+        try {
+            Statement stmt=Conexion.connection.createStatement();
+            ResultSet res=stmt.executeQuery(query);
+            //res coleccion de renglones
+            while(res.next()){//manda false cuando no se puede posicionar en un renglon
+                objetoDO=new DetalleOrdenDAO();
+                objetoDO.setIdOrden(res.getInt("idOrden"));
+                objetoDO.setIdProducto(res.getInt("idProducto"));
+                listaDO.add(objetoDO);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return listaDO;
     }
 }

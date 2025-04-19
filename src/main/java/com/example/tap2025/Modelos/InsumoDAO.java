@@ -1,5 +1,11 @@
 package com.example.tap2025.Modelos;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class InsumoDAO {
     private int idInsumo;
     private String nomIns;
@@ -46,4 +52,60 @@ public class InsumoDAO {
     public void setIdProveedor(int idProveedor) {
         this.idProveedor = idProveedor;
     }
+    public void INSERT(){
+        String query="INSERT INTO Insumo (nomIns,precioIns,cantidad,idProovedor) " +
+                "values('"+nomIns+"','"+precioIns+"','"+cantidad+"','"+idProveedor+"')";
+        //instanciar un statement
+        try{
+            Statement stmt=Conexion.connection.createStatement();
+            stmt.executeUpdate(query);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void UPDATE(){
+        String query="UPDATE Insumo SET nomIns = '"+nomIns+"'," +
+                "precioIns = '"+precioIns+"',cantidad = '"+cantidad+
+                "' idProovedor = '"+idProveedor+"' WHERE idInsumo = "+idInsumo;
+        try{
+            Statement stmt=Conexion.connection.createStatement();
+            stmt.executeUpdate(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void DELETE(){
+        String query="DELETE FROM Insumo where idInsumo = "+idInsumo;
+        try {
+            Statement stmt=Conexion.connection.createStatement();
+            stmt.executeUpdate(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public ObservableList<InsumoDAO> SELECT(){
+        String query="SELECT * FROM Insumo";
+        ObservableList<InsumoDAO> listaI= FXCollections.observableArrayList();
+        //El observable list se retornara cuando se llene
+        InsumoDAO objetoI;
+        try {
+            Statement stmt=Conexion.connection.createStatement();
+            ResultSet res=stmt.executeQuery(query);
+            //res coleccion de renglones
+            while(res.next()){//manda false cuando no se puede posicionar en un renglon
+                objetoI=new InsumoDAO();
+                objetoI.setIdInsumo(res.getInt("idInsumo"));
+                objetoI.setNomIns(res.getString("nomIns"));
+                objetoI.setPrecioIns(res.getFloat("precioIns"));
+                objetoI.setCantidad(res.getInt("cantidad"));
+                objetoI.setIdProveedor(res.getInt("idProveedor"));
+                listaI.add(objetoI);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return listaI;
+    }
 }
+
