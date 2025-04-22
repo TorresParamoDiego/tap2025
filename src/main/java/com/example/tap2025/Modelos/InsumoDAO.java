@@ -10,7 +10,6 @@ public class InsumoDAO {
     private int idInsumo;
     private String nomIns;
     private float precioIns;
-    private int cantidad;
     private int idProveedor;
 
     public int getIdInsumo() {
@@ -37,14 +36,6 @@ public class InsumoDAO {
         this.precioIns = precioIns;
     }
 
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
     public int getIdProveedor() {
         return idProveedor;
     }
@@ -53,8 +44,8 @@ public class InsumoDAO {
         this.idProveedor = idProveedor;
     }
     public void INSERT(){
-        String query="INSERT INTO Insumo (nomIns,precioIns,cantidad,idProovedor) " +
-                "values('"+nomIns+"','"+precioIns+"','"+cantidad+"','"+idProveedor+"')";
+        String query="INSERT INTO Insumo (nomIns,precioIns,idProovedor) " +
+                "values('"+nomIns+"','"+precioIns+"','"+idProveedor+"')";
         //instanciar un statement
         try{
             Statement stmt=Conexion.connection.createStatement();
@@ -66,8 +57,8 @@ public class InsumoDAO {
     }
     public void UPDATE(){
         String query="UPDATE Insumo SET nomIns = '"+nomIns+"'," +
-                "precioIns = '"+precioIns+"',cantidad = '"+cantidad+
-                "' idProovedor = '"+idProveedor+"' WHERE idInsumo = "+idInsumo;
+                "precioIns = '"+precioIns+"' idProovedor = '"+idProveedor+
+                "' WHERE idInsumo = "+idInsumo;
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
@@ -98,7 +89,6 @@ public class InsumoDAO {
                 objetoI.setIdInsumo(res.getInt("idInsumo"));
                 objetoI.setNomIns(res.getString("nomIns"));
                 objetoI.setPrecioIns(res.getFloat("precioIns"));
-                objetoI.setCantidad(res.getInt("cantidad"));
                 objetoI.setIdProveedor(res.getInt("idProveedor"));
                 listaI.add(objetoI);
             }

@@ -15,7 +15,7 @@ public class EmpleadoDAO {
     private String telEmpl;
     private String fechIngresoEmpl;
     private String horarioEntradaEmpl;
-    private String horarioSaidaEmpl;
+    private String horarioSalidaEmpl;
     private int idPuesto;
 
     public int getIdEmpl() {
@@ -82,12 +82,12 @@ public class EmpleadoDAO {
         this.horarioEntradaEmpl = horarioEntradaEmpl;
     }
 
-    public String getHorarioSaidaEmpl() {
-        return horarioSaidaEmpl;
+    public String getHorarioSalidaEmpl() {
+        return horarioSalidaEmpl;
     }
 
-    public void setHorarioSaidaEmpl(String horarioSaidaEmpl) {
-        this.horarioSaidaEmpl = horarioSaidaEmpl;
+    public void setHorarioSalidaEmpl(String horarioSalidaEmpl) {
+        this.horarioSalidaEmpl = horarioSalidaEmpl;
     }
 
     public int getIdPuesto() {
@@ -101,7 +101,7 @@ public class EmpleadoDAO {
         String query="INSERT INTO Empleado (nomEmpl,RFCEmpl,CurpEmpl,nssEmpl,horarioEntradaEmpl,horarioSalidaEmpl," +
                 "fechIngresoEmpl,telEmpl,idPuesto) " +
                 "values('"+nomEmpl+"','"+RFCEmpl+"','"+CurpEmpl+"','"+nssEmpl+"','"+horarioEntradaEmpl+
-                "','"+horarioSaidaEmpl+"','"+fechIngresoEmpl+"','"+telEmpl+"','"+idPuesto+"')";
+                "','"+horarioSalidaEmpl+"','"+fechIngresoEmpl+"','"+telEmpl+"','"+idPuesto+"')";
         //instanciar un statement
         try{
             Statement stmt=Conexion.connection.createStatement();
@@ -114,7 +114,7 @@ public class EmpleadoDAO {
     public void UPDATE(){
         String query="UPDATE Empleado SET nomEmpl = '"+nomEmpl+"' RFCEmpl ='"+RFCEmpl+"' " +
                 "CurpEmpl ='"+CurpEmpl+"' nssEmpl = '"+nssEmpl+"' horarioEntradaEmpl = '"+horarioEntradaEmpl+"' " +
-            "horarioSalidaEmpl = '"+horarioSaidaEmpl+"' fechIngresoEmpl = '"+fechIngresoEmpl+"' telEmpl = '"+telEmpl+"' " +
+            "horarioSalidaEmpl = '"+horarioSalidaEmpl+"' fechIngresoEmpl = '"+fechIngresoEmpl+"' telEmpl = '"+telEmpl+"' " +
             "idPuesto = '"+idPuesto+"' WHERE idEmpl = "+idEmpl;
         try{
             Statement stmt=Conexion.connection.createStatement();
@@ -149,7 +149,7 @@ public class EmpleadoDAO {
                 objetoE.setCurpEmpl(res.getString("CurpEmpl"));
                 objetoE.setNssEmpl(res.getString("nssEmpl"));
                 objetoE.setHorarioEntradaEmpl(res.getString("horarioEntradaEmpl"));
-                objetoE.setHorarioSaidaEmpl(res.getString("horarioSalidaEmpl"));
+                objetoE.setHorarioSalidaEmpl(res.getString("horarioSalidaEmpl"));
                 objetoE.setFechIngresoEmpl(res.getString("fechIngresoEmpl"));
                 objetoE.setTelEmpl(res.getString("telEmpl"));
                 objetoE.setIdPuesto(res.getInt("idPuesto"));

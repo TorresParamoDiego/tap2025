@@ -17,7 +17,7 @@ import javafx.util.Callback;
 
 public class ListaCategorias extends Stage {
     private ToolBar tlbMenu;
-    private TableView<Object> tblCategorias;
+    private TableView<CategoriaDAO> tblCategorias;
     private VBox vBox;
     private Scene escena;
     private Button btnAgregar;
@@ -58,5 +58,7 @@ public class ListaCategorias extends Stage {
                 return new ButtonCell("Eliminar");
             }
         });
+        tblCategorias.getColumns().addAll(tbcNomCategoria,tbcDescripcion,tbcEditar,tbcEliminar);
+        tblCategorias.setItems(objC.SELECT());
     }
 }

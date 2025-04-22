@@ -11,6 +11,15 @@ public class OrdenDAO {
     private int idCte;
     private int idEmpl;
     private int idMesa;
+    private String fechOrden;
+
+    public String getFechOrden() {
+        return fechOrden;
+    }
+
+    public void setFechOrden(String fechOrden) {
+        this.fechOrden = fechOrden;
+    }
 
     public int getIdOrden() {
         return idOrden;
@@ -44,8 +53,8 @@ public class OrdenDAO {
         this.idMesa = idMesa;
     }
     public void INSERT(){
-        String query="INSERT INTO Orden (idCte,idEmpl,idMesa) " +
-                "values('"+idCte+"','"+idEmpl+"','"+idMesa+"')";
+        String query="INSERT INTO Orden (idCte,idEmpl,idMesa,fechOrden) " +
+                "values('"+idCte+"','"+idEmpl+"','"+idMesa+"','"+fechOrden+"')";
         //instanciar un statement
         try{
             Statement stmt=Conexion.connection.createStatement();
@@ -58,7 +67,7 @@ public class OrdenDAO {
     public void UPDATE(){
         String query="UPDATE Orden SET idCte = '"+idCte+"'," +
                 "idEmpl = '"+idEmpl+"',idMesa = '"+idMesa+
-                "' WHERE idOrden = "+idOrden;
+                "', fechOrden ='"+fechOrden+"' WHERE idOrden = "+idOrden;
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
@@ -90,6 +99,7 @@ public class OrdenDAO {
                 objetoO.setIdCte(res.getInt("idCte"));
                 objetoO.setIdEmpl(res.getInt("idEmpl"));
                 objetoO.setIdMesa(res.getInt("idMesa"));
+                objetoO.setFechOrden(res.getString("fechOrden"));
                 listaO.add(objetoO);
             }
         }catch (Exception e){

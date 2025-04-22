@@ -36,6 +36,8 @@ public class ListaClientes extends Stage {
     }
     private void crearTabla(){
         ClientesDAO objC = new ClientesDAO();
+        TableColumn<ClientesDAO, String> tbcIdCte = new TableColumn<>("ID");
+        tbcIdCte.setCellValueFactory(new PropertyValueFactory<>("idCte"));
         TableColumn<ClientesDAO,String> tbcNomCte= new TableColumn<>("Nombre");
         tbcNomCte.setCellValueFactory(new PropertyValueFactory<>("nomCte")); //se toma el nombre del atributo de la clase
 
@@ -64,7 +66,7 @@ public class ListaClientes extends Stage {
             }
         });
 
-        tblClientes.getColumns().addAll(tbcNomCte,tbcDireccion,tbcTelCte,tbcEmailCte,tbcEditar,tbcEliminar);
+        tblClientes.getColumns().addAll(tbcIdCte,tbcNomCte,tbcDireccion,tbcTelCte,tbcEmailCte,tbcEditar,tbcEliminar);
         tblClientes.setItems(objC.SELECT());
 
 
