@@ -30,7 +30,7 @@ public class ListaCategorias extends Stage {
     private void creaUI(){
         tblCategorias = new TableView<>();
         btnAgregar = new Button("Agregar");
-        btnAgregar.setOnAction(e -> new CategoriaDAO());
+        btnAgregar.setOnAction(e -> new Categoria(tblCategorias,null));
         tlbMenu = new ToolBar(btnAgregar);
         creaTabla();
         vBox = new VBox(tlbMenu, tblCategorias);

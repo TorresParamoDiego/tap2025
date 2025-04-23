@@ -71,7 +71,7 @@ public class ProductoDAO {
             stmt.executeUpdate(query);
         }
         catch(Exception e){
-            e.printStackTrace();
+            Selectores.creaAlerta();
         }
     }
     public void UPDATE(){
@@ -83,7 +83,7 @@ public class ProductoDAO {
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
-            e.printStackTrace();
+            Selectores.creaAlerta();
         }
     }
     public void DELETE(){

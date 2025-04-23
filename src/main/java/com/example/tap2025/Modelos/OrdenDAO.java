@@ -12,6 +12,15 @@ public class OrdenDAO {
     private int idEmpl;
     private int idMesa;
     private String fechOrden;
+    private float precioOrden;
+
+    public float getPrecioOrden() {
+        return precioOrden;
+    }
+
+    public void setPrecioOrden(float precioOrden) {
+        this.precioOrden = precioOrden;
+    }
 
     public String getFechOrden() {
         return fechOrden;
@@ -53,8 +62,8 @@ public class OrdenDAO {
         this.idMesa = idMesa;
     }
     public void INSERT(){
-        String query="INSERT INTO Orden (idCte,idEmpl,idMesa,fechOrden) " +
-                "values('"+idCte+"','"+idEmpl+"','"+idMesa+"','"+fechOrden+"')";
+        String query="INSERT INTO Orden (idCte,idEmpl,idMesa,precioOrden,fechOrden) " +
+                "values('"+idCte+"','"+idEmpl+"','"+idMesa+"','"+fechOrden+"','"+precioOrden+"')";
         //instanciar un statement
         try{
             Statement stmt=Conexion.connection.createStatement();
@@ -67,12 +76,13 @@ public class OrdenDAO {
     public void UPDATE(){
         String query="UPDATE Orden SET idCte = '"+idCte+"'," +
                 "idEmpl = '"+idEmpl+"',idMesa = '"+idMesa+
-                "', fechOrden ='"+fechOrden+"' WHERE idOrden = "+idOrden;
+                "', fechOrden ='"+fechOrden+"', precioOrden =" +
+                "'"+precioOrden+"' WHERE idOrden = "+idOrden;
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
-            e.printStackTrace();
+            Selectores.creaAlerta();
         }
     }
     public void DELETE(){
@@ -81,7 +91,7 @@ public class OrdenDAO {
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
-            e.printStackTrace();
+            Selectores.creaAlerta();
         }
     }
     public ObservableList<OrdenDAO> SELECT(){
@@ -100,6 +110,7 @@ public class OrdenDAO {
                 objetoO.setIdEmpl(res.getInt("idEmpl"));
                 objetoO.setIdMesa(res.getInt("idMesa"));
                 objetoO.setFechOrden(res.getString("fechOrden"));
+                objetoO.setPrecioOrden(res.getFloat("precioOrden"));
                 listaO.add(objetoO);
             }
         }catch (Exception e){

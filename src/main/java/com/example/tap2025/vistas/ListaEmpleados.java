@@ -28,7 +28,7 @@ public class ListaEmpleados extends Stage {
     private void creaUI(){
         tblDetalleEmpleados = new TableView<>();
         btnAgregar = new Button("Agregar");
-        btnAgregar.setOnAction(e -> new EmpleadoDAO());
+        btnAgregar.setOnAction(e -> new Empleado(tblDetalleEmpleados,null));
         tlbMenu = new ToolBar(btnAgregar);
         creaTabla();
         vBox = new VBox(tlbMenu, tblDetalleEmpleados);

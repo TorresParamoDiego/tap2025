@@ -14,7 +14,6 @@ public class RestauranteAdmin extends Stage{
     private MenuBar menBar;
     private VBox vbox;
     private Scene scene;
-    private Menu menReportes;
 
     public void creaUI(){
         mitCat = new MenuItem("Categorias");
@@ -46,9 +45,8 @@ public class RestauranteAdmin extends Stage{
         menTablas = new Menu("Tablas");
         menTablas.getItems().addAll(mitCat,mitCte,mitDetOrd,mitDetPro,mitEmp,mitIns,mitMsa
                 ,mitRes,mitResMsa,mitPro,mitPrv,mitPst,mitOdn);
-        menReportes=new Menu();
         menBar = new MenuBar();
-        menBar.getMenus().addAll(menTablas,menReportes);
+        menBar.getMenus().addAll(menTablas);
         vbox = new VBox();
         vbox.getChildren().addAll(menBar);
         scene = new Scene(vbox);

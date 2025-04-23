@@ -28,7 +28,7 @@ public class ListaDetalleOrdenes extends Stage {
     private void creaUI(){
         tblDetalleOrdenes = new TableView<>();
         btnAgregar = new Button("Agregar");
-        btnAgregar.setOnAction(e -> new DetalleOrden());
+        btnAgregar.setOnAction(e -> new DetalleOrden(tblDetalleOrdenes,null));
         tlbMenu = new ToolBar(btnAgregar);
         creaTabla();
         vBox = new VBox(tlbMenu, tblDetalleOrdenes);
@@ -40,7 +40,8 @@ public class ListaDetalleOrdenes extends Stage {
         tbcIdOrden.setCellValueFactory(new PropertyValueFactory<>("idOrden"));
         TableColumn<DetalleOrdenDAO,Integer> tbcIdProducto= new TableColumn<>("Id Producto");
         tbcIdProducto.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
-
+        TableColumn<DetalleOrdenDAO,Integer> tbcCantidad= new TableColumn<>("Cantidad");
+        tbcCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
         TableColumn tbcEditar= new TableColumn<>("Editar");
         tbcEditar.setCellFactory(new Callback<TableColumn, TableCell>() {
             @Override
@@ -56,7 +57,7 @@ public class ListaDetalleOrdenes extends Stage {
                 return new ButtonCell("Eliminar");
             }
         });
-        tblDetalleOrdenes.getColumns().addAll(tbcIdOrden,tbcIdProducto,tbcEditar,tbcEliminar);
+        tblDetalleOrdenes.getColumns().addAll(tbcIdOrden,tbcIdProducto,tbcCantidad,tbcEditar,tbcEliminar);
         tblDetalleOrdenes.setItems(objC.SELECT());
     }
 }

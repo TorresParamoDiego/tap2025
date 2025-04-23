@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ClientesDAO {
@@ -54,7 +55,7 @@ public class ClientesDAO {
         this.emailCte = emailCte;
     }
 
-    public void INSERT(){
+    public void INSERT() {
         String query="INSERT INTO clientes (nomCte,telCte,direccion,emailCte) " +
                 "values('"+nomCte+"','"+telCte+"','"+direccion+"','"+emailCte+"')";
         //instanciar un statement
@@ -62,11 +63,11 @@ public class ClientesDAO {
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         }
-        catch(Exception e){
-            e.printStackTrace();
+        catch(Exception e) {
+            Selectores.creaAlerta();
         }
     }
-    public void UPDATE(){
+    public void UPDATE() {
         String query="UPDATE clientes SET nomCte = '"+nomCte+"'," +
                 "telCte = '"+telCte+"',direccion = '"+direccion+"'," +
                 "emailCte = '"+emailCte+"' WHERE idCte = "+idCte;

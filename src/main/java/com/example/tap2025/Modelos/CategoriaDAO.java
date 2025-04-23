@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class CategoriaDAO {
@@ -34,7 +35,7 @@ public class CategoriaDAO {
     public void setDescripcionCategoria(String descripcionCategoria) {
         this.descripcionCategoria = descripcionCategoria;
     }
-    public void INSERT(){
+    public void INSERT()  {
         String query="INSERT INTO Categoria (nomCategoria,descripcionCategoria) " +
                 "values('"+nomCategoria+"','"+descripcionCategoria+"')";
         //instanciar un statement
@@ -43,10 +44,10 @@ public class CategoriaDAO {
             stmt.executeUpdate(query);
         }
         catch(Exception e){
-            e.printStackTrace();
+            Selectores.creaAlerta();
         }
     }
-    public void UPDATE(){
+    public void UPDATE()   {
         String query="UPDATE Categoria SET nomCategoria = '"+nomCategoria+"'," +
                 "descripcionCategoria = '"+descripcionCategoria+"'"+
                 "WHERE idCategoria = "+idCategoria;
@@ -54,7 +55,7 @@ public class CategoriaDAO {
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
-            e.printStackTrace();
+            Selectores.creaAlerta();
         }
     }
     public void DELETE(){

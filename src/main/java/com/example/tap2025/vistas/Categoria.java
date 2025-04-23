@@ -9,6 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
+
 public class Categoria extends Stage {
     private Button btnGuardar;
     private VBox vBox;
@@ -42,12 +44,10 @@ public class Categoria extends Stage {
         btnGuardar.setOnAction(event -> {
             objC.setNomCategoria(txtNombre.getText());
             objC.setDescripcionCategoria(txtDescripcion.getText());
-
-            if(objC.getIdCategoria()>0)
+            if (objC.getIdCategoria() > 0)
                 objC.UPDATE();
             else
                 objC.INSERT();
-
             tblCategoria.setItems(objC.SELECT());
             tblCategoria.refresh();
             this.close();

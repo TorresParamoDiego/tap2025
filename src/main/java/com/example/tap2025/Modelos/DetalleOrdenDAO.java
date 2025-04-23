@@ -9,6 +9,14 @@ import java.sql.Statement;
 public class DetalleOrdenDAO {
     private int idOrden;
     private int idProducto;
+    private int cantidad;
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
 
     public int getIdOrden() {
         return idOrden;
@@ -26,26 +34,26 @@ public class DetalleOrdenDAO {
         this.idProducto = idProducto;
     }
     public void INSERT(){
-        String query="INSERT INTO DetalleOrden (idOrden,idProducto) " +
-                "values('"+idOrden+"','"+idProducto+"')";
+        String query="INSERT INTO DetalleOrden (idOrden,idProducto,cantidad) " +
+                "values('"+idOrden+"','"+idProducto+"','"+cantidad+"')";
         //instanciar un statement
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         }
         catch(Exception e){
-            e.printStackTrace();
+            Selectores.creaAlerta();
         }
     }
     public void UPDATE(){
         String query="UPDATE DetalleOrden SET idOrden = '"+idOrden+"'," +
                 "idProducto = '"+idProducto+
-                "' WHERE idOrden ="+idOrden+" AND idProducto = "+idProducto;
+                "' cantidad = '"+cantidad+"' WHERE idOrden ="+idOrden+" AND idProducto = "+idProducto;
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
-            e.printStackTrace();
+            Selectores.creaAlerta();
         }
     }
     public void DELETE(){

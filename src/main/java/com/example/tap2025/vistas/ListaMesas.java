@@ -28,7 +28,7 @@ public class ListaMesas extends Stage {
     private void creaUI(){
         tblMesas = new TableView<>();
         btnAgregar = new Button("Agregar");
-        btnAgregar.setOnAction(e -> new MesaDAO());
+        btnAgregar.setOnAction(e -> new Mesa(tblMesas,null));
         tlbMenu = new ToolBar(btnAgregar);
         creaTabla();
         vBox = new VBox(tlbMenu, tblMesas);
@@ -38,7 +38,7 @@ public class ListaMesas extends Stage {
         MesaDAO objC = new MesaDAO();
         TableColumn<MesaDAO,Integer> tbcIdMesa= new TableColumn<>("Id");
         tbcIdMesa.setCellValueFactory(new PropertyValueFactory<>("idMesa"));
-        TableColumn<MesaDAO,String> tbcCapacidad= new TableColumn<>("Capacidad");
+        TableColumn<MesaDAO,Integer> tbcCapacidad= new TableColumn<>("Capacidad");
         tbcCapacidad.setCellValueFactory(new PropertyValueFactory<>("capacidadMesa"));
         TableColumn tbcEditar= new TableColumn<>("Editar");
         tbcEditar.setCellFactory(new Callback<TableColumn, TableCell>() {

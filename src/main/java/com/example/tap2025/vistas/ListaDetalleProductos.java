@@ -28,7 +28,7 @@ public class ListaDetalleProductos extends Stage {
     private void creaUI(){
         tblDetalleProductos = new TableView<>();
         btnAgregar = new Button("Agregar");
-        btnAgregar.setOnAction(e -> new DetalleProductoDAO());
+        btnAgregar.setOnAction(e -> new DetalleProducto(tblDetalleProductos,null));
         tlbMenu = new ToolBar(btnAgregar);
         creaTabla();
         vBox = new VBox(tlbMenu, tblDetalleProductos);

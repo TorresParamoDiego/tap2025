@@ -63,7 +63,7 @@ public class PuestoDAO {
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
-            e.printStackTrace();
+            Selectores.creaAlerta();
         }
     }
     public void DELETE(){
@@ -72,7 +72,7 @@ public class PuestoDAO {
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
-            e.printStackTrace();
+            Selectores.creaAlerta();
         }
     }
     public ObservableList<PuestoDAO> SELECT(){

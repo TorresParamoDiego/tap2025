@@ -28,7 +28,7 @@ public class ListaInsumos extends Stage {
     private void creaUI(){
         tblInsumos = new TableView<>();
         btnAgregar = new Button("Agregar");
-        btnAgregar.setOnAction(e -> new InsumoDAO());
+        btnAgregar.setOnAction(e -> new Insumo(tblInsumos,null));
         tlbMenu = new ToolBar(btnAgregar);
         creaTabla();
         vBox = new VBox(tlbMenu, tblInsumos);
