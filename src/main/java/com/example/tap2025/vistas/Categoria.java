@@ -38,7 +38,7 @@ public class Categoria extends Stage {
         txtNombre = new TextField();
         txtNombre.setPromptText("Nombre");
         txtDescripcion = new TextArea();
-        txtDescripcion.setPromptText("Direccion");
+        txtDescripcion.setPromptText("Descripcion");
 
         btnGuardar = new Button("Guardar");
         btnGuardar.setOnAction(event -> {

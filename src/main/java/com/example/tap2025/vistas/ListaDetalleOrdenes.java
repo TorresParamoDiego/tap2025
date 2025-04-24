@@ -21,7 +21,7 @@ public class ListaDetalleOrdenes extends Stage {
     private Button btnAgregar;
     public ListaDetalleOrdenes() {
         creaUI();
-        this.setTitle("Lista de Detalle de los productos");
+        this.setTitle("Lista de Detalle de los ordenes");
         this.setScene(escena);
         this.show();
     }

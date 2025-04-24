@@ -22,7 +22,7 @@ public class ListaProductos extends Stage {
     private Button btnAgregar;
     public ListaProductos() {
         creaUI();
-        this.setTitle("Lista de Detalle de los insumos");
+        this.setTitle("Lista de Detalle de los productos");
         this.setScene(escena);
         this.show();
     }
@@ -34,6 +34,7 @@ public class ListaProductos extends Stage {
         creaTabla();
         vBox = new VBox(tlbMenu, tblProductos);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
     private void creaTabla(){
         ProductoDAO objC = new ProductoDAO();
@@ -81,7 +82,7 @@ public class ListaProductos extends Stage {
             }
         });
         tblProductos.getColumns().addAll(tbcIdProducto,tbcNomProd,tbcPrecioProd,tbcCostoProd,
-        tbcUrlImagenProd,tbcIdCategoria,tbcEditar,tbcEditar);
+        tbcUrlImagenProd,tbcIdCategoria,tbcEditar,tbcEliminar);
         tblProductos.setItems(objC.SELECT());
     }
 }

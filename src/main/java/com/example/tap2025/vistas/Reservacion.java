@@ -33,11 +33,11 @@ public class Reservacion extends Stage {
     }
     private void creaUI(){
         txtHoraio = new TextField();
-        txtHoraio.setText("Fecha y horario");
+        txtHoraio.setPromptText("Fecha y horario");
         txtDuracion = new TextField();
-        txtDuracion.setText("Duracion");
+        txtDuracion.setPromptText("Duracion");
         txtCliente = new TextField();
-        txtCliente.setText("Cliente");
+        txtCliente.setPromptText("Cliente");
         btnGuardar = new Button("Guardar");
         btnGuardar.setOnAction(event -> {
             obj.setHorarioFechRese(txtHoraio.getText());
