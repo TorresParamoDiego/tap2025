@@ -1,6 +1,6 @@
 package com.example.tap2025.vistas;
 
-import com.example.tap2025.Modelos.DetalleProductoDAO;
+import com.example.tap2025.Modelos.ProductoDAO;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -9,47 +9,58 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Producto extends Stage {
-    public Producto(TableView tblDetalleProducto, DetalleProductoDAO obj) {}
     private Button btnGuardar;
     private VBox vBox;
-    private TextField txtIdInsumo,txtIdProducto;
+    private TextField txtNombre,txtPrecio,txtCosto,txtUrlImagen,txtCategoria;
     private Scene escena;
-    private DetalleProductoDAO obj;
-    private TableView tblCategoria;
-    public DetalleProducto(TableView tblDetalleProducto, DetalleProductoDAO obj) {
-        this.tblCategoria = tblCategoria;
+    private ProductoDAO obj;
+    private TableView tblProducto;
+    public Producto(TableView tblProducto, ProductoDAO obj) {
+        this.tblProducto = tblProducto;
         creaUI();
         if(obj == null) {
-            this.obj = new DetalleProductoDAO();
+            this.obj = new ProductoDAO();
         }
         else {
             this.obj = obj;
-            txtIdProducto.setText(String.valueOf(obj.getIdProducto()));
-            txtIdInsumo.setText(String.valueOf(obj.getIdInsumo()));
+            txtNombre.setText(obj.getNomProd());
+            txtPrecio.setText(String.valueOf(obj.getPrecioProd()));
+            txtCosto.setText(String.valueOf(obj.getCostoProd()));
+            txtUrlImagen.setText(obj.getUrlImagenProd());
+            txtCategoria.setText(String.valueOf(obj.getIdCategoria()));
         }
-        this.setTitle("Registrar los insumos del producto");
+        this.setTitle("Registrar los productos");
         this.setScene(escena);
         this.show();
     }
     private void creaUI(){
-        txtIdProducto = new TextField();
-        txtIdProducto.setPromptText("Id Producto");
-        txtIdInsumo = new TextField();
-        txtIdInsumo.setPromptText("Id Insumo");
+        txtNombre = new TextField();
+        txtNombre.setPromptText("Nombre");
+        txtPrecio = new TextField();
+        txtPrecio.setPromptText("Precio");
+        txtCosto = new TextField();
+        txtCosto.setPromptText("Costo");
+        txtUrlImagen = new TextField();
+        txtUrlImagen.setPromptText("UrlImagen");
+        txtCategoria = new TextField();
+        txtCategoria.setPromptText("Id Categoria");
         btnGuardar = new Button("Guardar");
         btnGuardar.setOnAction(event -> {
-            obj.setIdProducto(Integer.parseInt(txtIdProducto.getText()));
-            obj.setIdInsumo(Integer.parseInt(txtIdInsumo.getText()));
+            obj.setNomProd(txtNombre.getText());
+            obj.setPrecioProd(Integer.parseInt(txtPrecio.getText()));
+            obj.setCostoProd(Integer.parseInt(txtCosto.getText()));
+            obj.setUrlImagenProd(txtUrlImagen.getText());
+            obj.setIdCategoria(Integer.parseInt(txtCategoria.getText()));
             if(obj.getIdProducto()>0)
                 obj.UPDATE();
             else
                 obj.INSERT();
 
-            tblCategoria.setItems(obj.SELECT());
-            tblCategoria.refresh();
+            tblProducto.setItems(obj.SELECT());
+            tblProducto.refresh();
             this.close();
         });
-        vBox = new VBox(btnGuardar);
+        vBox = new VBox(txtNombre,txtPrecio,txtCosto,txtUrlImagen,txtCategoria,btnGuardar);
         escena = new Scene(vBox);
     }
 }

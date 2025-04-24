@@ -28,7 +28,7 @@ public class ListaPuestos extends Stage {
     private void creaUI(){
         tblPuestos = new TableView<>();
         btnAgregar = new Button("Agregar");
-        btnAgregar.setOnAction(e -> new Mesa(tblPuestos,null));
+        btnAgregar.setOnAction(e -> new Puesto(tblPuestos,null));
         tlbMenu = new ToolBar(btnAgregar);
         creaTabla();
         vBox = new VBox(tlbMenu, tblPuestos);

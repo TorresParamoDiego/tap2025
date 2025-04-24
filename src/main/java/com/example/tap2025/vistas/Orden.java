@@ -28,7 +28,7 @@ public class Orden extends Stage {
             txtIdMesa.setText(String.valueOf(obj.getIdMesa()));
             txtFechOrden.setText(String.valueOf(obj.getFechOrden()));
         }
-        this.setTitle("Registrar los insumos del producto");
+        this.setTitle("Registrar las ordenes");
         this.setScene(escena);
         this.show();
     }

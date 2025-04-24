@@ -1,16 +1,12 @@
 package com.example.tap2025.vistas;
 
 import com.example.tap2025.Modelos.ClientesDAO;
-import com.example.tap2025.Modelos.Selectores;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 public class Cliente extends Stage {
 

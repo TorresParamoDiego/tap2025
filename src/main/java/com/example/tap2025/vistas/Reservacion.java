@@ -1,6 +1,6 @@
 package com.example.tap2025.vistas;
 
-import com.example.tap2025.Modelos.DetalleProductoDAO;
+import com.example.tap2025.Modelos.ReservacionDAO;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -9,47 +9,50 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Reservacion extends Stage {
-    public Reservacion(TableView tblDetalleProducto, DetalleProductoDAO obj) {}
     private Button btnGuardar;
     private VBox vBox;
-    private TextField txtIdInsumo,txtIdProducto;
+    private TextField txtDuracion,txtHoraio,txtCliente;
     private Scene escena;
-    private DetalleProductoDAO obj;
-    private TableView tblCategoria;
-    public DetalleProducto(TableView tblDetalleProducto, DetalleProductoDAO obj) {
-        this.tblCategoria = tblCategoria;
+    private ReservacionDAO obj;
+    private TableView tblReservacion;
+    public Reservacion(TableView tblDetalleProducto, ReservacionDAO obj) {
+        this.tblReservacion = tblReservacion;
         creaUI();
         if(obj == null) {
-            this.obj = new DetalleProductoDAO();
+            this.obj = new ReservacionDAO();
         }
         else {
             this.obj = obj;
-            txtIdProducto.setText(String.valueOf(obj.getIdProducto()));
-            txtIdInsumo.setText(String.valueOf(obj.getIdInsumo()));
+            txtCliente.setText(String.valueOf(obj.getIdCte()));
+            txtDuracion.setText(String.valueOf(obj.getDuracionRese()));
+            txtHoraio.setText(obj.getHorarioFechRese());
         }
-        this.setTitle("Registrar los insumos del producto");
+        this.setTitle("Registrar reservacion");
         this.setScene(escena);
         this.show();
     }
     private void creaUI(){
-        txtIdProducto = new TextField();
-        txtIdProducto.setPromptText("Id Producto");
-        txtIdInsumo = new TextField();
-        txtIdInsumo.setPromptText("Id Insumo");
+        txtHoraio = new TextField();
+        txtHoraio.setText("Fecha y horario");
+        txtDuracion = new TextField();
+        txtDuracion.setText("Duracion");
+        txtCliente = new TextField();
+        txtCliente.setText("Cliente");
         btnGuardar = new Button("Guardar");
         btnGuardar.setOnAction(event -> {
-            obj.setIdProducto(Integer.parseInt(txtIdProducto.getText()));
-            obj.setIdInsumo(Integer.parseInt(txtIdInsumo.getText()));
-            if(obj.getIdProducto()>0)
+            obj.setHorarioFechRese(txtHoraio.getText());
+            obj.setIdCte(Integer.parseInt(txtCliente.getText()));
+            obj.setDuracionRese(Integer.parseInt(txtDuracion.getText()));
+            if(obj.getIdReservacion()>0)
                 obj.UPDATE();
             else
                 obj.INSERT();
 
-            tblCategoria.setItems(obj.SELECT());
-            tblCategoria.refresh();
+            tblReservacion.setItems(obj.SELECT());
+            tblReservacion.refresh();
             this.close();
         });
-        vBox = new VBox(btnGuardar);
+        vBox = new VBox(txtHoraio, txtDuracion, txtCliente, btnGuardar);
         escena = new Scene(vBox);
     }
 }
