@@ -53,17 +53,23 @@ public class InsumoDAO {
         }
         catch(Exception e){
             Selectores.creaAlerta();
+            e.printStackTrace();
         }
     }
     public void UPDATE(){
         String query="UPDATE Insumo SET nomIns = '"+nomIns+"'," +
-                "precioIns = '"+precioIns+"' idProveedor = '"+idProveedor+
+                "precioIns = '"+precioIns+"', idProveedor = '"+idProveedor+
                 "' WHERE idInsumo = "+idInsumo;
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
+            System.out.println(idInsumo);
+            System.out.println(nomIns);
+            System.out.println(precioIns);
+            System.out.println(idProveedor);
             Selectores.creaAlerta();
+            e.printStackTrace();
         }
     }
     public void DELETE(){

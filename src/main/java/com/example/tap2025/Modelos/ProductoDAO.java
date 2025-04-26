@@ -77,13 +77,14 @@ public class ProductoDAO {
     public void UPDATE(){
         String query="UPDATE Producto SET nomProd = '"+nomProd+"'," +
                 "precioProd = '"+precioProd+"',costoProd = '"+costoProd+
-                "' UrlImagenProd = '"+UrlImagenProd+"' idCategoria" +
+                "' ,UrlImagenProd = '"+UrlImagenProd+"', idCategoria" +
                 "= '"+idCategoria+"' WHERE idProducto = "+idProducto;
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
             Selectores.creaAlerta();
+            e.printStackTrace();
         }
     }
     public void DELETE(){

@@ -47,8 +47,8 @@ public class Producto extends Stage {
         btnGuardar = new Button("Guardar");
         btnGuardar.setOnAction(event -> {
             obj.setNomProd(txtNombre.getText());
-            obj.setPrecioProd(Integer.parseInt(txtPrecio.getText()));
-            obj.setCostoProd(Integer.parseInt(txtCosto.getText()));
+            obj.setPrecioProd(Float.parseFloat(txtPrecio.getText()));
+            obj.setCostoProd(Float.parseFloat(txtCosto.getText()));
             obj.setUrlImagenProd(txtUrlImagen.getText());
             obj.setIdCategoria(Integer.parseInt(txtCategoria.getText()));
             if(obj.getIdProducto()>0)

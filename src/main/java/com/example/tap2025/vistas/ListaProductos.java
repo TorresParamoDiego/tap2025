@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -53,14 +54,19 @@ public class ListaProductos extends Stage {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (item == null || empty) {
+                if (item == null || empty || item.equals("")) {
                     setGraphic(null);
                 }
                 else {
-                    imageView=new ImageView(getClass().getResource(item).toString());
-                    imageView.setFitHeight(50);
-                    imageView.setFitWidth(50);
-                    setGraphic(imageView);
+                    try{
+                        imageView.setImage(new Image(getClass().getResource("/Images/Productos/"+item).toExternalForm()));
+                        imageView.setFitHeight(50);
+                        imageView.setFitWidth(50);
+                        setGraphic(imageView);
+                    }catch (Exception e){
+                        setGraphic(null);
+                    }
+
                 }
             }
         });

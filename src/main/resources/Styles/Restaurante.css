@@ -1,13 +1,17 @@
 .button{
-    -fx-background-color: #0c10a9;
+    -fx-background-color: #a9360c;
     -fx-text-fill: white;
     -fx-border-color:black;
     -fx-border-radius: 30;
     -fx-background-radius:30;
 }
 .button:hover{
-    -fx-background-color: #00ffbb;
+    -fx-background-color: #ffb61d;
 }
 .table-view{
     -fx-background-color: #fad88d;
+}
+.table-view .table-cell{
+    -fx-background-color: #da442c;
+    -fx-text-fill: white;
 }
