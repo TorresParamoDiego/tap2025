@@ -44,7 +44,7 @@ public class InsumoDAO {
         this.idProveedor = idProveedor;
     }
     public void INSERT(){
-        String query="INSERT INTO Insumo (nomIns,precioIns,idProovedor) " +
+        String query="INSERT INTO Insumo (nomIns,precioIns,idProveedor) " +
                 "values('"+nomIns+"','"+precioIns+"','"+idProveedor+"')";
         //instanciar un statement
         try{
@@ -57,7 +57,7 @@ public class InsumoDAO {
     }
     public void UPDATE(){
         String query="UPDATE Insumo SET nomIns = '"+nomIns+"'," +
-                "precioIns = '"+precioIns+"' idProovedor = '"+idProveedor+
+                "precioIns = '"+precioIns+"' idProveedor = '"+idProveedor+
                 "' WHERE idInsumo = "+idInsumo;
         try{
             Statement stmt=Conexion.connection.createStatement();

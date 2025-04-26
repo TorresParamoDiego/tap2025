@@ -1,7 +1,20 @@
 package com.example.tap2025.Componentes;
 
 import com.example.tap2025.Modelos.*;
+import com.example.tap2025.vistas.Categoria;
 import com.example.tap2025.vistas.Cliente;
+import com.example.tap2025.vistas.CompraInsumo;
+import com.example.tap2025.vistas.DetalleOrden;
+import com.example.tap2025.vistas.DetalleProducto;
+import com.example.tap2025.vistas.Empleado;
+import com.example.tap2025.vistas.Insumo;
+import com.example.tap2025.vistas.Mesa;
+import com.example.tap2025.vistas.Orden;
+import com.example.tap2025.vistas.Producto;
+import com.example.tap2025.vistas.Proovedor;
+import com.example.tap2025.vistas.Puesto;
+import com.example.tap2025.vistas.Reservacion;
+import com.example.tap2025.vistas.ReservacionMesa;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -34,7 +47,47 @@ public class ButtonCell extends TableCell<Object,String>{
             if(obj instanceof ClientesDAO objC) {
                 new Cliente(this.getTableView(), objC);
                 lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof CategoriaDAO objC) {
+                new Categoria(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof CompraInsumosDAO objC) {
+                new CompraInsumo(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof DetalleOrdenDAO objC) {
+                new DetalleOrden(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof OrdenDAO objC) {
+                new Orden(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof DetalleProductoDAO objC) {
+                new DetalleProducto(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof ProductoDAO objC) {
+                new Producto(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof InsumoDAO objC) {
+                new Insumo(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof MesaDAO objC) {
+                new Mesa(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof ReservacionDAO objC) {
+                new Reservacion(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof ReservacionMesaDAO objC) {
+                new ReservacionMesa(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof PuestoDAO objC) {
+                new Puesto(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof ProveedorDAO objC) {
+                new Proovedor(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
+            } else if (obj instanceof EmpleadoDAO objC) {
+                new Empleado(this.getTableView(), objC);
+                lista = FXCollections.observableArrayList(objC.SELECT());
             }
+
         }
         else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

@@ -4,11 +4,14 @@ import com.example.tap2025.Componentes.ButtonCell;
 import com.example.tap2025.Modelos.PuestoDAO;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -42,6 +45,23 @@ public class ListaPuestos extends Stage {
         tbcNombre.setCellValueFactory(new PropertyValueFactory<>("nomPuesto"));
         TableColumn<PuestoDAO,String> tbcDescripcion= new TableColumn<>("Descripcion");
         tbcDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        tbcDescripcion.setCellFactory(tc -> new TableCell<>() {
+            TextArea texto = new TextArea();
+            @Override
+            protected void updateItem(String s, boolean b) {
+                if(s!=null) {
+                    texto.setStyle("-fx-background-color: transparent; -fx-padding: 5;");
+                    super.updateItem(s, b);
+                    texto.setText(s);
+                    texto.setWrapText(true);
+                    texto.setEditable(false);
+                    texto.setMaxWidth(tbcDescripcion.getWidth());
+                    texto.setPrefHeight(texto.getText().split("\n").length * 20);
+                    setGraphic(texto);
+                }
+            }
+        });
+        tbcDescripcion.setPrefWidth(300);
         TableColumn<PuestoDAO,Float> tbcSueldo= new TableColumn<>("Sueldo");
         tbcSueldo.setCellValueFactory(new PropertyValueFactory<>("sueldoPuesto"));
 

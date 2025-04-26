@@ -1,6 +1,7 @@
 package com.example.tap2025.vistas;
 
 import com.example.tap2025.Modelos.CategoriaDAO;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
@@ -20,10 +21,12 @@ public class Restaurante extends Stage {
     Button[] categorias;
     Scene escena;
     public void creaUI(){
-        categorias = new Button[new CategoriaDAO().SELECT().size()];
+        ObservableList<CategoriaDAO> categoria= new CategoriaDAO().SELECT();
+        categorias = new Button[categoria.size()];
         for (int i = 0; i < categorias.length; i++) {
             categorias[i] = new Button();
             categorias[i].setGraphic(new ImageView());
+            categorias[i].setText(categoria.get(i).getNomCategoria());
         }
         mitLogin = new MenuItem("Login");
         mitLogin.setOnAction(e -> new RestauranteAdmin());

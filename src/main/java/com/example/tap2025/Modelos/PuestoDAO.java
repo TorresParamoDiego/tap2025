@@ -44,7 +44,7 @@ public class PuestoDAO {
         this.sueldoPuesto = sueldoPuesto;
     }
     public void INSERT(){
-        String query="INSERT INTO puesto (nomPuesto,sueldoPuesto,descripcionPuesto) " +
+        String query="INSERT INTO puesto (nomPuesto,sueldoPuesto,descripcion) " +
                 "values('"+nomPuesto+"','"+sueldoPuesto+"','"+descripcion+"')";
         //instanciar un statement
         try{
