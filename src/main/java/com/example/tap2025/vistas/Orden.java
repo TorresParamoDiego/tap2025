@@ -26,7 +26,7 @@ public class Orden extends Stage {
             txtIdCte.setText(String.valueOf(obj.getIdCte()));
             txtIdEmpl.setText(String.valueOf(obj.getIdEmpl()));
             txtIdMesa.setText(String.valueOf(obj.getIdMesa()));
-            txtFechOrden.setText(String.valueOf(obj.getFechOrden()));
+            txtFechOrden.setText(String.valueOf(obj.getFechHora()));
         }
         this.setTitle("Registrar las ordenes");
         this.setScene(escena);
@@ -46,7 +46,7 @@ public class Orden extends Stage {
             obj.setIdCte(Integer.parseInt(txtIdCte.getText()));
             obj.setIdEmpl(Integer.parseInt(txtIdEmpl.getText()));
             obj.setIdMesa(Integer.parseInt(txtIdMesa.getText()));
-            obj.setFechOrden(txtFechOrden.getText());
+            obj.setFechHora(txtFechOrden.getText());
             if(obj.getIdOrden()>0)
                 obj.UPDATE();
             else

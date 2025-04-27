@@ -11,8 +11,8 @@ public class OrdenDAO {
     private int idCte;
     private int idEmpl;
     private int idMesa;
-    private String fechOrden;
-    private float precioOrden;
+    private String fechHora;
+    private float precioOrden=0.1f;
 
     public float getPrecioOrden() {
         return precioOrden;
@@ -22,12 +22,12 @@ public class OrdenDAO {
         this.precioOrden = precioOrden;
     }
 
-    public String getFechOrden() {
-        return fechOrden;
+    public String getFechHora() {
+        return fechHora;
     }
 
-    public void setFechOrden(String fechOrden) {
-        this.fechOrden = fechOrden;
+    public void setFechHora(String fechHora) {
+        this.fechHora = fechHora;
     }
 
     public int getIdOrden() {
@@ -62,8 +62,8 @@ public class OrdenDAO {
         this.idMesa = idMesa;
     }
     public void INSERT(){
-        String query="INSERT INTO Orden (idCte,idEmpl,idMesa,precioOrden,fechOrden) " +
-                "values('"+idCte+"','"+idEmpl+"','"+idMesa+"','"+fechOrden+"','"+precioOrden+"')";
+        String query="INSERT INTO Orden (idCte,idEmpl,idMesa,precioOrden,fechHora) " +
+                "values('"+idCte+"','"+idEmpl+"','"+idMesa+"','"+precioOrden+"','"+fechHora+"')";
         //instanciar un statement
         try{
             Statement stmt=Conexion.connection.createStatement();
@@ -76,7 +76,7 @@ public class OrdenDAO {
     public void UPDATE(){
         String query="UPDATE Orden SET idCte = '"+idCte+"'," +
                 "idEmpl = '"+idEmpl+"',idMesa = '"+idMesa+
-                "', fechOrden ='"+fechOrden+"', precioOrden =" +
+                "', fechHora ='"+fechHora+"', precioOrden =" +
                 "'"+precioOrden+"' WHERE idOrden = "+idOrden;
         try{
             Statement stmt=Conexion.connection.createStatement();
@@ -109,7 +109,7 @@ public class OrdenDAO {
                 objetoO.setIdCte(res.getInt("idCte"));
                 objetoO.setIdEmpl(res.getInt("idEmpl"));
                 objetoO.setIdMesa(res.getInt("idMesa"));
-                objetoO.setFechOrden(res.getString("fechOrden"));
+                objetoO.setFechHora(res.getString("fechHora"));
                 objetoO.setPrecioOrden(res.getFloat("precioOrden"));
                 listaO.add(objetoO);
             }

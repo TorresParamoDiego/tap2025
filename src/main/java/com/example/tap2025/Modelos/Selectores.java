@@ -39,4 +39,46 @@ public class Selectores {
         }
         return listaP;
     }
+    public static ObservableList<EmpleadoDAO> listaEmpleados() {
+        String query="SELECT * FROM Empleado where idPuesto= "+8;
+        ObservableList<EmpleadoDAO> listaE= FXCollections.observableArrayList();
+        EmpleadoDAO objetoE;
+        try {
+            Statement stmt=Conexion.connection.createStatement();
+            ResultSet res=stmt.executeQuery(query);
+            //res coleccion de renglones
+            while(res.next()){//manda false cuando no se puede posicionar en un renglon
+                objetoE=new EmpleadoDAO();
+                objetoE.setIdEmpl(res.getInt("idEmpl"));
+                objetoE.setNomEmpl(res.getString("nomEmpl"));
+                objetoE.setRFCEmpl(res.getString("RFCEmpl"));
+                objetoE.setCurpEmpl(res.getString("CurpEmpl"));
+                objetoE.setNssEmpl(res.getString("nssEmpl"));
+                objetoE.setHorarioEntradaEmpl(res.getString("horarioEntradaEmpl"));
+                objetoE.setHorarioSalidaEmpl(res.getString("horarioSalidaEmpl"));
+                objetoE.setFechIngresoEmpl(res.getString("fechIngresoEmpl"));
+                objetoE.setTelEmpl(res.getString("telEmpl"));
+                objetoE.setIdPuesto(res.getInt("idPuesto"));
+                listaE.add(objetoE);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return listaE;
+    }
+    public static double calcPrecioOrden(int idOrden){
+        double precio=0;
+        String query="SELECT sum(precioProd) FROM DetalleOrden inner join Producto on Producto.idProducto = " +
+                "DetalleOrden.idProducto where idOrden= "+idOrden;
+        try {
+            Statement stmt=Conexion.connection.createStatement();
+            ResultSet res=stmt.executeQuery(query);
+            if(res.next()){
+                precio=res.getDouble(1);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return precio;
+    }
 }

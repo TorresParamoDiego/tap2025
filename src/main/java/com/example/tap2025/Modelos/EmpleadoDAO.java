@@ -108,6 +108,7 @@ public class EmpleadoDAO {
             stmt.executeUpdate(query);
         }
         catch(Exception e){
+            e.printStackTrace();
             Selectores.creaAlerta();
         }
     }

@@ -14,4 +14,12 @@
 .table-view .table-cell{
     -fx-background-color: #da442c;
     -fx-text-fill: white;
+    -fx-border-color: black;
+    -fx-font-size: 15px;
+}
+
+.table-view .column-header .label {
+    -fx-background-color: #6c0505;
+    -fx-text-fill: white;
+    -fx-border-color: black;
 }
