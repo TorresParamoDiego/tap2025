@@ -47,7 +47,7 @@ public class ListaOrdenes extends Stage {
         TableColumn<OrdenDAO,Integer> tbcIdMesa= new TableColumn<>("No. Mesa");
         tbcIdMesa.setCellValueFactory(new PropertyValueFactory<>("idMesa"));
         TableColumn<OrdenDAO,String> tbcFechOrden= new TableColumn<>("Fecha");
-        tbcFechOrden.setCellValueFactory(new PropertyValueFactory<>("fechOrden"));
+        tbcFechOrden.setCellValueFactory(new PropertyValueFactory<>("fechHora"));
         TableColumn tbcEditar= new TableColumn<>("Editar");
         tbcEditar.setCellFactory(new Callback<TableColumn, TableCell>() {
             @Override

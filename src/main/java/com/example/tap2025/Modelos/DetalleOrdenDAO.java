@@ -36,6 +36,7 @@ public class DetalleOrdenDAO {
     public void INSERT(){
         String query="INSERT INTO DetalleOrden (idOrden,idProducto,cantidad) " +
                 "values('"+idOrden+"','"+idProducto+"','"+cantidad+"')";
+        System.out.println(cantidad);
         //instanciar un statement
         try{
             Statement stmt=Conexion.connection.createStatement();
@@ -79,6 +80,7 @@ public class DetalleOrdenDAO {
                 objetoDO=new DetalleOrdenDAO();
                 objetoDO.setIdOrden(res.getInt("idOrden"));
                 objetoDO.setIdProducto(res.getInt("idProducto"));
+                objetoDO.setCantidad(res.getInt("cantidad"));
                 listaDO.add(objetoDO);
             }
         }catch (Exception e){

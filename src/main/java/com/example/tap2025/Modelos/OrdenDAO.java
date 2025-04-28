@@ -12,7 +12,7 @@ public class OrdenDAO {
     private int idEmpl;
     private int idMesa;
     private String fechHora;
-    private float precioOrden=0.1f;
+    private float precioOrden;
 
     public float getPrecioOrden() {
         return precioOrden;

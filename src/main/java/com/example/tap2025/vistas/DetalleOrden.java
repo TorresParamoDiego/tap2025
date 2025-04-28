@@ -48,7 +48,7 @@ public class DetalleOrden extends Stage {
             tblCategoria.refresh();
             this.close();
         });
-        vBox = new VBox(txtIdOrden,txtIdProducto,txtCantidad,btnGuardar);
+        vBox = new VBox(txtIdOrden,txtIdProducto,btnGuardar);
         escena = new Scene(vBox);
     }
 }
