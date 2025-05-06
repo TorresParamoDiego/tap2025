@@ -11,4 +11,5 @@ module com.example.tap2025 {
     requires mysql.connector.j;
     requires java.sql;
     opens com.example.tap2025.Modelos;
+    opens com.example.tap2025.Componentes;
 }

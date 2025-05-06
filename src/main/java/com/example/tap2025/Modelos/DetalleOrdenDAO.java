@@ -43,6 +43,7 @@ public class DetalleOrdenDAO {
             stmt.executeUpdate(query);
         }
         catch(Exception e){
+            e.printStackTrace();
             Selectores.creaAlerta();
         }
     }

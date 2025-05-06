@@ -1,7 +1,7 @@
 package com.example.tap2025.vistas;
 
 import com.example.tap2025.Componentes.ButtonAgregar;
-import com.example.tap2025.Componentes.ButtonCell;
+import com.example.tap2025.Componentes.ProductoOrden;
 import com.example.tap2025.Modelos.CategoriaDAO;
 import com.example.tap2025.Modelos.ClientesDAO;
 import com.example.tap2025.Modelos.DetalleOrdenDAO;
@@ -35,7 +35,7 @@ import java.util.LinkedList;
 
 public class Restaurante extends Stage {
     VBox pnlEscena,pnlProductos,pnlDetalleOrden;
-    HBox pnlCatProd,pnlPrincipal,pnlMesas,pnlEmpleados,pnlClientes;
+    HBox pnlCatProd,pnlPrincipal,pnlMesas,pnlEmpleados,pnlClientes,pnlOrdenAcabar;
     MenuBar mnbRestaurante;
     Menu menOpciones;
     MenuItem mitLogin,mitReservaciones;
@@ -43,7 +43,7 @@ public class Restaurante extends Stage {
     Scene escena;
     TableView tbvProductos,tbvOrden;
     Button btnTerminar;
-    Label lblIdEmpleado,lblIdMesa,lblIdCliente;
+    Label lblIdEmpleado,lblIdMesa,lblIdCliente,lblPrecio;
     OrdenDAO orden;
     int idEmpleado,idOrden,idMesa,idCliente;
     LinkedList<Integer> arrProductos;
@@ -52,7 +52,7 @@ public class Restaurante extends Stage {
         lblIdEmpleado = new Label("ID EMPLEADO");
         lblIdCliente = new Label("ID CLIENTE");
         lblIdMesa = new Label("ID MESA");
-
+        lblPrecio = new Label("Precio");
         creaBotones();
         pnlCatProd = new HBox(btnCategorias);
         pnlEmpleados=new HBox(btnEmpleados);
@@ -70,12 +70,13 @@ public class Restaurante extends Stage {
             orden.UPDATE();
             orden.INSERT();
             orden=orden.SELECT().get(orden.SELECT().size()-1);
+            orden.setPrecioOrden(0);
             idOrden=orden.getIdOrden();
             tbvOrden.getItems().clear();
         }
         );
         tbvProductos = new TableView<ProductoDAO>();
-        tbvOrden = new TableView<ProductoDAO>();
+        tbvOrden = new TableView<ProductoOrden>();
         creaTablaProductos(0);
         creaTablaOrden(0);
         mitLogin = new MenuItem("Login");
@@ -87,14 +88,15 @@ public class Restaurante extends Stage {
         mnbRestaurante = new MenuBar();
         mnbRestaurante.getMenus().addAll(menOpciones);
         pnlProductos = new VBox(pnlCatProd,tbvProductos);
-        pnlEscena = new VBox(mnbRestaurante, pnlProductos,tbvOrden,btnTerminar);
+        pnlOrdenAcabar=new HBox(lblPrecio,btnTerminar);
+        pnlEscena = new VBox(mnbRestaurante, pnlProductos,tbvOrden,pnlOrdenAcabar);
 
         pnlDetalleOrden= new VBox(lblIdEmpleado);
-        pnlDetalleOrden.getChildren().addAll(btnEmpleados);
+        pnlDetalleOrden.getChildren().addAll(pnlEmpleados);
         pnlDetalleOrden.getChildren().addAll(lblIdMesa);
-        pnlDetalleOrden.getChildren().addAll(btnMesas);
+        pnlDetalleOrden.getChildren().addAll(pnlMesas);
         pnlDetalleOrden.getChildren().addAll(lblIdCliente);
-        pnlDetalleOrden.getChildren().addAll(btnClientes);
+        pnlDetalleOrden.getChildren().addAll(pnlClientes);
 
         pnlPrincipal = new HBox(pnlEscena,pnlDetalleOrden);
         escena = new Scene(pnlPrincipal);
@@ -103,13 +105,15 @@ public class Restaurante extends Stage {
     private void creaTablaOrden(int idOrden){
         tbvOrden.getItems().clear();
         Restaurante restaurante = this;
-        TableColumn<ProductoDAO,String> tbcNomProd= new TableColumn<>("Nombre");
+        TableColumn<ProductoOrden,String> tbcNomProd= new TableColumn<>("Nombre");
         tbcNomProd.setCellValueFactory(new PropertyValueFactory<>("nomProd"));
-        TableColumn<ProductoDAO,Float> tbcPrecioProd= new TableColumn<>("Precio");
+        TableColumn<ProductoOrden,Float> tbcPrecioProd= new TableColumn<>("Precio");
         tbcPrecioProd.setCellValueFactory(new PropertyValueFactory<>("precioProd"));
-        TableColumn<ProductoDAO,String> tbcUrlImagenProd= new TableColumn<>("Imagen");
+        TableColumn<ProductoOrden,String> tbcUrlImagenProd= new TableColumn<>("Imagen");
         tbcUrlImagenProd.setCellValueFactory(new PropertyValueFactory<>("urlImagenProd"));
-        tbcUrlImagenProd.setCellFactory(col -> new TableCell<ProductoDAO,String>() {
+        TableColumn<ProductoOrden,Integer> tbcCantidadProd= new TableColumn<>("Cantidad");
+        tbcCantidadProd.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+        tbcUrlImagenProd.setCellFactory(col -> new TableCell<ProductoOrden,String>() {
             private ImageView imageView = new ImageView();
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -134,11 +138,11 @@ public class Restaurante extends Stage {
         tbcEliminar.setCellFactory(new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn tableColumn) {
-                return new ButtonAgregar(arrProductos,orden,"Eliminar",tbvOrden);
+                return new ButtonAgregar(arrProductos,orden,"Eliminar",tbvOrden,lblPrecio);
             }
         });
         tbvOrden.getColumns().clear();
-        tbvOrden.getColumns().addAll(tbcNomProd, tbcPrecioProd, tbcUrlImagenProd,tbcEliminar);
+        tbvOrden.getColumns().addAll(tbcNomProd, tbcPrecioProd, tbcUrlImagenProd,tbcCantidadProd,tbcEliminar);
     }
     private void creaBotones(){
         ObservableList<CategoriaDAO> categoria= new CategoriaDAO().SELECT();
@@ -171,7 +175,12 @@ public class Restaurante extends Stage {
         for (int i = 0; i < listMesas.size(); i++) {
             btnMesas[i] = new Button();
             btnMesas[i].setText(listMesas.get(i).getIdMesa()+"");
-            btnMesas[i].setPrefSize(30,30);
+            ImageView imageView = new ImageView(getClass().getResource(
+                    "/Images/mesa.png").toExternalForm());
+            imageView.setStyle("-fx-background-color: #a9360c;-fx-border-radius: 30;");
+            imageView.setFitHeight(30);
+            imageView.setFitWidth(30);
+            btnMesas[i].setGraphic(imageView);
             int finalI = i;
             btnMesas[i].setOnAction(e -> {
                 idMesa=listMesas.get(finalI).getIdMesa();
@@ -225,7 +234,7 @@ public class Restaurante extends Stage {
         tbcAgregar.setCellFactory(new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn tableColumn) {
-                return new ButtonAgregar(arrProductos,orden,"Agregar",tbvOrden);
+                return new ButtonAgregar(arrProductos,orden,"Agregar",tbvOrden,lblPrecio);
             }
         });
         tbvProductos.getColumns().clear();
@@ -239,6 +248,9 @@ public class Restaurante extends Stage {
         this.show();
         this.setTitle("Restaurante");
         this.setMaximized(true);
+        idCliente=1;
+        idMesa=1;
+        idEmpleado=1;
         orden=new OrdenDAO();
         orden.setFechHora(Timestamp.valueOf(LocalDateTime.now())+"");
         orden.setIdCte(1);
@@ -247,9 +259,12 @@ public class Restaurante extends Stage {
         orden.INSERT();
         orden=orden.SELECT().get(orden.SELECT().size()-1);
         idOrden=orden.getIdOrden();
+        this.setOnCloseRequest( e ->
+                orden.DELETE()
+        );
     }
     private void agreProdDetaOrden(){
-        int contador=0;
+        int contador;
         LinkedList<Integer> contado=new LinkedList<>();
         for (int i = 0; i < arrProductos.size(); i++) {
             Integer prod=arrProductos.get(i);
@@ -267,6 +282,7 @@ public class Restaurante extends Stage {
                 detorden.setIdProducto(prod);
                 detorden.setCantidad(contador);
                 detorden.INSERT();
+                contado.add(prod);
             }
         }
     }
