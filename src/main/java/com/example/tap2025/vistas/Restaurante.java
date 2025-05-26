@@ -27,15 +27,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Restaurante extends Stage {
-    VBox pnlEscena,pnlProductos,pnlDetalleOrden;
-    HBox pnlCatProd,pnlPrincipal,pnlMesas,pnlEmpleados,pnlClientes,pnlOrdenAcabar;
+    VBox pnlEscena,pnlProductos,pnlDetalleOrden,pnlMesas,pnlEmpleados,pnlClientes;
+    HBox pnlCatProd,pnlPrincipal,pnlOrdenAcabar;
+    HBox[] pnlBotoMesa,pnlBotoCte,pnlBotoEmpl;
     MenuBar mnbRestaurante;
     Menu menOpciones;
     MenuItem mitLogin,mitReservaciones;
@@ -55,9 +54,9 @@ public class Restaurante extends Stage {
         lblPrecio = new Label("Precio");
         creaBotones();
         pnlCatProd = new HBox(btnCategorias);
-        pnlEmpleados=new HBox(btnEmpleados);
-        pnlClientes = new HBox(btnClientes);
-        pnlMesas = new HBox(btnMesas);
+        pnlEmpleados=new VBox(pnlBotoEmpl);
+        pnlClientes = new VBox(pnlBotoCte);
+        pnlMesas = new VBox(pnlBotoMesa);
 
         btnTerminar= new Button("Terminar");
         btnTerminar.setOnAction(e -> {
@@ -70,7 +69,6 @@ public class Restaurante extends Stage {
             orden.UPDATE();
             orden.INSERT();
             orden=orden.SELECT().get(orden.SELECT().size()-1);
-            orden.setPrecioOrden(0);
             idOrden=orden.getIdOrden();
             tbvOrden.getItems().clear();
         }
@@ -86,10 +84,11 @@ public class Restaurante extends Stage {
         menOpciones = new Menu("Opciones");
         menOpciones.getItems().addAll(mitLogin,mitReservaciones);
         mnbRestaurante = new MenuBar();
+        Label Orden=new Label("Orden");
         mnbRestaurante.getMenus().addAll(menOpciones);
         pnlProductos = new VBox(pnlCatProd,tbvProductos);
         pnlOrdenAcabar=new HBox(lblPrecio,btnTerminar);
-        pnlEscena = new VBox(mnbRestaurante, pnlProductos,tbvOrden,pnlOrdenAcabar);
+        pnlEscena = new VBox(mnbRestaurante, pnlProductos,Orden,tbvOrden,pnlOrdenAcabar);
 
         pnlDetalleOrden= new VBox(lblIdEmpleado);
         pnlDetalleOrden.getChildren().addAll(pnlEmpleados);
@@ -104,7 +103,6 @@ public class Restaurante extends Stage {
     }
     private void creaTablaOrden(int idOrden){
         tbvOrden.getItems().clear();
-        Restaurante restaurante = this;
         TableColumn<ProductoOrden,String> tbcNomProd= new TableColumn<>("Nombre");
         tbcNomProd.setCellValueFactory(new PropertyValueFactory<>("nomProd"));
         TableColumn<ProductoOrden,Float> tbcPrecioProd= new TableColumn<>("Precio");
@@ -145,12 +143,13 @@ public class Restaurante extends Stage {
         tbvOrden.getColumns().addAll(tbcNomProd, tbcPrecioProd, tbcUrlImagenProd,tbcCantidadProd,tbcEliminar);
     }
     private void creaBotones(){
+        int cont=0;
         ObservableList<CategoriaDAO> categoria= new CategoriaDAO().SELECT();
         btnCategorias = new Button[categoria.size()];
         for (int i = 0; i < btnCategorias.length; i++) {
             btnCategorias[i] = new Button();
             btnCategorias[i].setText(categoria.get(i).getNomCategoria());
-            btnCategorias[i].setPrefSize(200,30);
+            btnCategorias[i].setPrefSize(100,30);
             int finalI = i;
             btnCategorias[i].setOnAction(e -> {
                 creaTablaProductos(categoria.get(finalI).getIdCategoria());
@@ -160,6 +159,7 @@ public class Restaurante extends Stage {
         }
         ObservableList<EmpleadoDAO> listEmpleados= Selectores.listaEmpleados();
         btnEmpleados = new Button[listEmpleados.size()];
+        pnlBotoEmpl=new HBox[listEmpleados.size()/5+1];
         for (int i = 0; i < listEmpleados.size(); i++) {
             btnEmpleados[i] = new Button();
             btnEmpleados[i].setText(listEmpleados.get(i).getIdEmpl()+"");
@@ -169,26 +169,45 @@ public class Restaurante extends Stage {
                 idEmpleado=listEmpleados.get(finalI).getIdEmpl();
                 lblIdEmpleado.setText("Empleado "+listEmpleados.get(finalI).getIdEmpl());
             });
+            if(pnlBotoEmpl[cont]==null)
+                pnlBotoEmpl[cont]=new HBox();
+            pnlBotoEmpl[cont].getChildren().addAll(btnEmpleados[i]);
+            if(pnlBotoEmpl[cont].getChildren().size()==5){
+                cont++;
+                if(pnlBotoEmpl.length>cont)
+                    pnlBotoEmpl[cont]=new HBox();
+            }
         }
         ObservableList<MesaDAO> listMesas=new MesaDAO().SELECT();
         btnMesas = new Button[listMesas.size()];
+        cont=0;
+        pnlBotoMesa=new HBox[listMesas.size()/5+1];
         for (int i = 0; i < listMesas.size(); i++) {
             btnMesas[i] = new Button();
-            btnMesas[i].setText(listMesas.get(i).getIdMesa()+"");
             ImageView imageView = new ImageView(getClass().getResource(
                     "/Images/mesa.png").toExternalForm());
-            imageView.setStyle("-fx-background-color: #a9360c;-fx-border-radius: 30;");
             imageView.setFitHeight(30);
             imageView.setFitWidth(30);
             btnMesas[i].setGraphic(imageView);
+            btnMesas[i].setText(listMesas.get(i).getIdMesa()+"");
             int finalI = i;
             btnMesas[i].setOnAction(e -> {
                 idMesa=listMesas.get(finalI).getIdMesa();
                 lblIdMesa.setText("Mesa "+listMesas.get(finalI).getIdMesa());
             });
+            if(pnlBotoMesa[cont]==null) {
+                pnlBotoMesa[cont] = new HBox();
+            }
+            pnlBotoMesa[cont].getChildren().add(btnMesas[i]);
+            if(pnlBotoMesa[cont].getChildren().size()==5){
+                cont++;
+                pnlBotoMesa[cont]=new HBox();
+            }
         }
+        cont=0;
         ObservableList<ClientesDAO> listClientes=new ClientesDAO().SELECT();
         btnClientes = new Button[listClientes.size()];
+        pnlBotoCte=new HBox[listClientes.size()/5+1];
         for (int i = 0; i < listClientes.size(); i++) {
             btnClientes[i] = new Button();
             btnClientes[i].setText(listClientes.get(i).getIdCte()+"");
@@ -198,6 +217,13 @@ public class Restaurante extends Stage {
                 idCliente=listClientes.get(finalI).getIdCte();
                 lblIdCliente.setText("Cliente "+listMesas.get(finalI).getIdMesa());
             });
+            if(pnlBotoCte[cont]==null)
+                pnlBotoCte[cont]=new HBox();
+            pnlBotoCte[cont].getChildren().addAll(btnClientes[i]);
+            if(pnlBotoCte[cont].getChildren().size()==5){
+                cont++;
+                pnlBotoCte[cont]=new HBox();
+            }
         }
     }
     private void creaTablaProductos(int id){
@@ -274,7 +300,6 @@ public class Restaurante extends Stage {
                 for (int j = 0; j < arrProductos.size(); j++) {
                     if (prod.equals(arrProductos.get(j))) {
                         contador++;
-                        System.out.println(contador);
                     }
                 }
                 DetalleOrdenDAO detorden = new DetalleOrdenDAO();
@@ -285,5 +310,6 @@ public class Restaurante extends Stage {
                 contado.add(prod);
             }
         }
+        arrProductos.clear();
     }
 }

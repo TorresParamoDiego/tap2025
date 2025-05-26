@@ -71,7 +71,7 @@ public class Selectores {
 
     public static double calcPrecioOrden(int idOrden) {
         double precio = 0;
-        String query = "SELECT sum(precioProd) FROM DetalleOrden inner join Producto on Producto.idProducto = " +
+        String query = "SELECT sum(precioProd*cantidad) FROM DetalleOrden inner join Producto on Producto.idProducto = " +
                 "DetalleOrden.idProducto where idOrden= " + idOrden;
         try {
             Statement stmt = Conexion.connection.createStatement();
