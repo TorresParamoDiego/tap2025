@@ -17,9 +17,18 @@ public class EmpleadoDAO {
     private String horarioEntradaEmpl;
     private String horarioSalidaEmpl;
     private int idPuesto;
+    private String password;
 
     public int getIdEmpl() {
         return idEmpl;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setIdEmpl(int idEmpl) {
@@ -98,29 +107,37 @@ public class EmpleadoDAO {
         this.idPuesto = idPuesto;
     }
     public void INSERT(){
-        String query="INSERT INTO Empleado (nomEmpl,RFCEmpl,CurpEmpl,nssEmpl,horarioEntradaEmpl,horarioSalidaEmpl," +
-                "fechIngresoEmpl,telEmpl,idPuesto) " +
-                "values('"+nomEmpl+"','"+RFCEmpl+"','"+CurpEmpl+"','"+nssEmpl+"','"+horarioEntradaEmpl+
-                "','"+horarioSalidaEmpl+"','"+fechIngresoEmpl+"','"+telEmpl+"','"+idPuesto+"')";
+        String query = "INSERT INTO Empleado " +
+                "(nomEmpl, RFCEmpl, CurpEmpl, nssEmpl, horarioEntradaEmpl, horarioSalidaEmpl, fechIngresoEmpl, telEmpl, idPuesto) " +
+                "VALUES ('" + nomEmpl + "', '" + RFCEmpl + "', '" + CurpEmpl + "', '" + nssEmpl + "', '" + horarioEntradaEmpl + "', '" + horarioSalidaEmpl + "', '" + fechIngresoEmpl + "', '" + telEmpl + "', '" + idPuesto + "', '" + password + "')";
         //instanciar un statement
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         }
         catch(Exception e){
+            System.out.println(query+"\n\n");
             e.printStackTrace();
             Selectores.creaAlerta();
         }
     }
     public void UPDATE(){
-        String query="UPDATE Empleado SET nomEmpl = '"+nomEmpl+"' RFCEmpl ='"+RFCEmpl+"' " +
-                "CurpEmpl ='"+CurpEmpl+"' nssEmpl = '"+nssEmpl+"' horarioEntradaEmpl = '"+horarioEntradaEmpl+"' " +
-            "horarioSalidaEmpl = '"+horarioSalidaEmpl+"' fechIngresoEmpl = '"+fechIngresoEmpl+"' telEmpl = '"+telEmpl+"' " +
-            "idPuesto = '"+idPuesto+"' WHERE idEmpl = "+idEmpl;
+        String query = "UPDATE Empleado SET nomEmpl = '" + nomEmpl + "', " +
+                "RFCEmpl = '" + RFCEmpl + "', " +
+                "CurpEmpl = '" + CurpEmpl + "', " +
+                "nssEmpl = '" + nssEmpl + "', " +
+                "horarioEntradaEmpl = '" + horarioEntradaEmpl + "', " +
+                "horarioSalidaEmpl = '" + horarioSalidaEmpl + "', " +
+                "fechIngresoEmpl = '" + fechIngresoEmpl + "', " +
+                "telEmpl = '" + telEmpl + "', " +
+                "idPuesto = '" + idPuesto + "', " +
+                "password = '" + password + "' " +
+                "WHERE idEmpl = " + idEmpl;
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
+            System.out.println(query+"\n\n");
             Selectores.creaAlerta();
         }
     }
@@ -134,7 +151,7 @@ public class EmpleadoDAO {
         }
     }
     public ObservableList<EmpleadoDAO> SELECT(){
-        String query="SELECT * FROM Empleado";
+        String query="SELECT * FROM empleado";
         ObservableList<EmpleadoDAO> listaE= FXCollections.observableArrayList();
         //El observable list se retornara cuando se llene
         EmpleadoDAO objetoE;
@@ -154,9 +171,11 @@ public class EmpleadoDAO {
                 objetoE.setFechIngresoEmpl(res.getString("fechIngresoEmpl"));
                 objetoE.setTelEmpl(res.getString("telEmpl"));
                 objetoE.setIdPuesto(res.getInt("idPuesto"));
+                objetoE.setPassword(res.getString("password"));
                 listaE.add(objetoE);
             }
         }catch (Exception e){
+            System.out.println(query+"\n\n");
             e.printStackTrace();
         }
         return listaE;

@@ -1,6 +1,8 @@
 package com.example.tap2025.vistas;
 
 import com.example.tap2025.Modelos.EmpleadoDAO;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -13,7 +15,7 @@ public class Empleado extends Stage {
     private VBox vBox;
     private TextField txtNombre,txtTelefono;
     private TextField txtRFC, txtCurp,txtNss,txtfechIngreso;
-    private TextField txthorarioEntrada, txthorarioSalida,txtIdPuesto;
+    private TextField txthorarioEntrada, txthorarioSalida,txtIdPuesto, txtPass;
     private Scene escena;
     private EmpleadoDAO obj;
     private TableView tblEmpleados;
@@ -34,6 +36,7 @@ public class Empleado extends Stage {
             txthorarioEntrada.setText(obj.getHorarioEntradaEmpl());
             txthorarioSalida.setText(obj.getHorarioSalidaEmpl());
             txtIdPuesto.setText(String.valueOf(obj.getIdPuesto()));
+            txtPass.setText("");
         }
         this.setTitle("Registrar los empleados");
         this.setScene(escena);
@@ -58,6 +61,8 @@ public class Empleado extends Stage {
         txthorarioSalida.setPromptText("Horario salida");
         txtIdPuesto = new TextField();
         txtIdPuesto.setPromptText("Id puesto");
+        txtPass = new TextField();
+        txtPass.setPromptText("Password");
         btnGuardar = new Button("Guardar");
         btnGuardar.setOnAction(event -> {
             obj.setNomEmpl(txtNombre.getText());
@@ -69,6 +74,7 @@ public class Empleado extends Stage {
             obj.setHorarioEntradaEmpl(txthorarioEntrada.getText());
             obj.setHorarioSalidaEmpl(txthorarioSalida.getText());
             obj.setIdPuesto(Integer.parseInt(txtIdPuesto.getText()));
+            obj.setPassword(hashPassword(txtPass.getText()));
             if(obj.getIdEmpl()>0)
                 obj.UPDATE();
             else
@@ -79,7 +85,21 @@ public class Empleado extends Stage {
             this.close();
         });
         vBox = new VBox(txtNombre,txtTelefono,txtRFC,
-                txtCurp,txtNss,txtfechIngreso,txthorarioEntrada,txthorarioSalida,txtIdPuesto,btnGuardar);
+                txtCurp,txtNss,txtfechIngreso,txthorarioEntrada,txthorarioSalida,txtIdPuesto, txtPass,btnGuardar);
         escena = new Scene(vBox);
+    }
+
+    String hashPassword(String pass){
+        Argon2 argon2 = Argon2Factory.create();
+        char[] passwd = pass.toCharArray();
+        try {
+            int N = 65536;
+            int r = 2;
+            int p = 1;
+            // Hash password
+            return argon2.hash(r, N, p, passwd);
+        } finally {
+            argon2.wipeArray(passwd);
+        }
     }
 }

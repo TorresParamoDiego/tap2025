@@ -35,22 +35,22 @@ public class DetalleOrdenDAO {
     }
     public void INSERT(){
         String query="INSERT INTO DetalleOrden (idOrden,idProducto,cantidad) " +
-                "values('"+idOrden+"','"+idProducto+"','"+cantidad+"')";
-        System.out.println(cantidad);
-        //instanciar un statement
+                "VALUES('"+idOrden+"','"+idProducto+"','"+cantidad+"') " +
+                "ON DUPLICATE KEY UPDATE cantidad = cantidad + "+cantidad;
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         }
         catch(Exception e){
+            System.out.println(query);
             e.printStackTrace();
             Selectores.creaAlerta();
         }
     }
     public void UPDATE(){
         String query="UPDATE DetalleOrden SET idOrden = '"+idOrden+"'," +
-                "idProducto = '"+idProducto+
-                "' cantidad = '"+cantidad+"' WHERE idOrden ="+idOrden+" AND idProducto = "+idProducto;
+                "idProducto = '"+idProducto+"'," +
+                " cantidad = '"+cantidad+"' WHERE idOrden ="+idOrden+" AND idProducto = "+idProducto;
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);

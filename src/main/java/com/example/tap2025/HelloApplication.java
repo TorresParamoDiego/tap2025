@@ -1,8 +1,10 @@
 package com.example.tap2025;
 
-import com.example.tap2025.Componentes.Hilo;
 import com.example.tap2025.Modelos.Conexion;
-import com.example.tap2025.vistas.*;
+import com.example.tap2025.vistas.Calculadora;
+import com.example.tap2025.vistas.Celayork;
+import com.example.tap2025.vistas.Login;
+import com.example.tap2025.vistas.Rompecabezas;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -10,7 +12,9 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class HelloApplication extends Application {
     
@@ -25,7 +29,7 @@ public class HelloApplication extends Application {
         mitRompecabezas = new MenuItem("Rompecabezas");
         mitHilos = new MenuItem("Celayork");
         mitCalculadora.setOnAction(event -> new Calculadora());
-        mitRestaurante.setOnAction(event -> new Restaurante());
+        mitRestaurante.setOnAction(event -> new Login());
         mitRompecabezas.setOnAction(event -> new Rompecabezas());
         mitHilos.setOnAction(event -> new Celayork());
         menCompetencia1 = new Menu("Competencia 1");
@@ -40,36 +44,24 @@ public class HelloApplication extends Application {
     }
     @Override
     public void start(Stage stage) throws IOException {
-        /*new Hilo("Ruta Pinos").start();
-        new Hilo("Ruta Laureles").start();
-        new Hilo("Ruta San Juan de la Vega").start();
-        new Hilo("Ruta Teneria").start();
-        new Hilo("Ruta Monteblanco").start();*/
         Conexion.createConnection();
         creaUI();
         stage.setTitle("Hola Mundo de Eventos ʕ•́ᴥ•̀ʔっ");
         stage.setScene(escena);
         stage.show();
+        //new RestauranteAdmin();
         stage.setMaximized(true);
+        stage.setOnCloseRequest(event -> {
+            try {
+                Conexion.connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            System.exit(0);
+        });
     }
 
     public static void main(String[] args) {
         launch();
     }
 }
-/*
-        btnSaludo=new Button("Hola amigo :)");
-        btnSaludo.setOnAction(event -> clickEvent());
-        btnSaludo2=new Button("Hola amiga :)");
-        btnSaludo2.setOnAction(event ->clickEvent());
-        btnSaludo3=new Button("Hola amige :)");
-        vBox=new VBox(btnSaludo,btnSaludo2,btnSaludo3);
-        vBox.setSpacing(15);
-        vBox.setPadding(new Insets(10,0,0,0));
-        stage.setTitle("Hola Mundo de Eventos :)");
-        stage.setScene(new Scene(vBox,200,200));
-        stage.show();
-        stage.setMaximized(true);
-
-
-*/

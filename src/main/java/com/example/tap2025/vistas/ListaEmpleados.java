@@ -56,6 +56,9 @@ public class ListaEmpleados extends Stage {
         tbcHoraioSalidaEmpl.setCellValueFactory(new PropertyValueFactory<>("horarioSalidaEmpl"));
         TableColumn<EmpleadoDAO,Integer> tbcIdPuesto= new TableColumn<>("Id puesto");
         tbcIdPuesto.setCellValueFactory(new PropertyValueFactory<>("idPuesto"));
+        //TableColumn<EmpleadoDAO,String> tbcPass= new TableColumn<>("Pass");
+        //tbcPass.setCellValueFactory(new PropertyValueFactory<>("password"));
+
         TableColumn tbcEditar= new TableColumn<>("Editar");
         tbcEditar.setCellFactory(new Callback<TableColumn, TableCell>() {
             @Override

@@ -38,8 +38,8 @@ public class ListaReservaciones extends Stage {
         ReservacionDAO objC = new ReservacionDAO();
         TableColumn<ReservacionDAO, Integer> tbcIdReservacion = new TableColumn<>("ID");
         tbcIdReservacion.setCellValueFactory(new PropertyValueFactory<>("idReservacion"));
-        TableColumn<ReservacionDAO, String> tbcHoraRese = new TableColumn<>("Horario y fecha");
-        tbcHoraRese.setCellValueFactory(new PropertyValueFactory<>("horarioRese"));
+        TableColumn<ReservacionDAO, String> tbcHoraRese = new TableColumn<>("Hora y fecha");
+        tbcHoraRese.setCellValueFactory(new PropertyValueFactory<>("horarioFechRese"));
         TableColumn<ReservacionDAO, Integer> tbcDuracionRese = new TableColumn<>("Duracion");
         tbcDuracionRese.setCellValueFactory(new PropertyValueFactory<>("duracionRese"));
         TableColumn<ReservacionDAO,Integer> tbcidCte = new TableColumn<>("Id Cliente");

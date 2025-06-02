@@ -1,5 +1,8 @@
 package com.example.tap2025.vistas;
 
+import com.example.tap2025.reportes.GenerarReporte;
+import com.example.tap2025.reportes.Graficas;
+import com.itextpdf.text.DocumentException;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -7,10 +10,16 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+
 public class RestauranteAdmin extends Stage{
     private MenuItem mitCat,mitCte,mitDetOrd,mitDetPro,mitEmp,mitIns,mitMsa;
     private MenuItem mitOdn,mitPro,mitPrv,mitPst,mitRes,mitResMsa;
-    private Menu menTablas;
+    private MenuItem mitReporte, mitProdMasVendidos, mitVentasPDia, mitEmplMasVentas, mitReporteGraficas;
+    private Menu menTablas, reporte;
     private MenuBar menBar;
     private VBox vbox;
     private Scene scene;
@@ -45,8 +54,52 @@ public class RestauranteAdmin extends Stage{
         menTablas = new Menu("Tablas");
         menTablas.getItems().addAll(mitCat,mitCte,mitDetOrd,mitDetPro,mitEmp,mitIns,mitMsa
                 ,mitRes,mitResMsa,mitPro,mitPrv,mitPst,mitOdn);
+
+        mitReporte = new MenuItem("Generar reporte de órdenes");
+        mitReporte.setOnAction(event -> new GenerarReporte());
+        mitProdMasVendidos = new MenuItem("Productos más vendidos");
+        mitProdMasVendidos.setOnAction(event -> {
+            try {
+                Graficas.masVendidos();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        mitVentasPDia = new MenuItem("Ventas por día");
+        mitVentasPDia.setOnAction(event -> {
+            try {
+                Graficas.ventasPDia();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        mitEmplMasVentas = new MenuItem("Ventas de empleados");
+        mitEmplMasVentas.setOnAction(event -> {
+            try {
+                Graficas.empleadoMasVentas();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        mitReporteGraficas = new MenuItem("Reporte de Graficas");
+        mitReporteGraficas.setOnAction(event -> {
+            try {
+                String path="./reporte_graficas.pdf";
+                Graficas.exportarGraficasAPDF(path);
+
+                File file = new File(path);
+                Desktop.getDesktop().open(file);
+            } catch (SQLException | DocumentException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        reporte = new Menu("Reportes");
+        reporte.getItems().addAll(mitProdMasVendidos, mitVentasPDia, mitEmplMasVentas, mitReporteGraficas, mitReporte);
+
+
         menBar = new MenuBar();
-        menBar.getMenus().addAll(menTablas);
+        menBar.getMenus().addAll(menTablas, reporte);
         vbox = new VBox();
         vbox.getChildren().addAll(menBar);
         scene = new Scene(vbox);

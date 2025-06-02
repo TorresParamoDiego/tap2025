@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class Orden extends Stage {
     private Button btnGuardar;
     private VBox vBox;
-    private TextField txtIdCte,txtIdEmpl,txtIdMesa,txtFechOrden;
+    private TextField txtIdCte,txtIdEmpl,txtIdMesa,txtFechOrden, txtMetodoPago;
     private Scene escena;
     private OrdenDAO obj;
     private TableView tblOrdenes;
@@ -27,6 +27,7 @@ public class Orden extends Stage {
             txtIdEmpl.setText(String.valueOf(obj.getIdEmpl()));
             txtIdMesa.setText(String.valueOf(obj.getIdMesa()));
             txtFechOrden.setText(String.valueOf(obj.getFechHora()));
+            txtMetodoPago.setText(obj.getIdMetodoPago()+"");
         }
         this.setTitle("Registrar las ordenes");
         this.setScene(escena);
@@ -41,12 +42,15 @@ public class Orden extends Stage {
         txtFechOrden.setPromptText("Fecha orden");
         txtIdMesa = new TextField();
         txtIdMesa.setPromptText("No. mesa");
+        txtMetodoPago = new TextField();
+        txtMetodoPago.setPromptText("Metodo de pago (1 - efectivo | 2 - tarjeta)");
         btnGuardar = new Button("Guardar");
         btnGuardar.setOnAction(event -> {
             obj.setIdCte(Integer.parseInt(txtIdCte.getText()));
             obj.setIdEmpl(Integer.parseInt(txtIdEmpl.getText()));
             obj.setIdMesa(Integer.parseInt(txtIdMesa.getText()));
             obj.setFechHora(txtFechOrden.getText());
+            obj.setIdMetodoPago(Integer.parseInt(txtIdMesa.getText()));
             if(obj.getIdOrden()>0)
                 obj.UPDATE();
             else
@@ -56,7 +60,7 @@ public class Orden extends Stage {
             tblOrdenes.refresh();
             this.close();
         });
-        vBox = new VBox(txtIdCte,txtIdEmpl,txtIdMesa,txtFechOrden,btnGuardar);
+        vBox = new VBox(txtIdCte,txtIdEmpl,txtIdMesa,txtFechOrden, txtMetodoPago,btnGuardar);
         escena = new Scene(vBox);
     }
 }

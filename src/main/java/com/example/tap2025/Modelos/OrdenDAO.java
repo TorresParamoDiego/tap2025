@@ -11,8 +11,17 @@ public class OrdenDAO {
     private int idCte;
     private int idEmpl;
     private int idMesa;
+    private int idMetodoPago;
     private String fechHora;
     private float precioOrden;
+
+    public int getIdMetodoPago() {
+        return idMetodoPago;
+    }
+
+    public void setIdMetodoPago(int idMetodoPago) {
+        this.idMetodoPago = idMetodoPago;
+    }
 
     public float getPrecioOrden() {
         return precioOrden;
@@ -62,14 +71,16 @@ public class OrdenDAO {
         this.idMesa = idMesa;
     }
     public void INSERT(){
-        String query="INSERT INTO Orden (idCte,idEmpl,idMesa,precioOrden,fechHora) " +
-                "values('"+idCte+"','"+idEmpl+"','"+idMesa+"','"+precioOrden+"','"+fechHora+"')";
+        String query="INSERT INTO Orden (idCte,idEmpl,idMesa,precioOrden,fechHora,idMetodoPago) " +
+                "values('"+idCte+"','"+idEmpl+"','"+idMesa+"','"+precioOrden+"','"+fechHora+"','"+idMetodoPago+"')";
         //instanciar un statement
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         }
         catch(Exception e){
+            System.out.println(query);
+            System.err.println(query+"\n");
             e.printStackTrace();
         }
     }
@@ -77,7 +88,7 @@ public class OrdenDAO {
         String query="UPDATE Orden SET idCte = '"+idCte+"'," +
                 "idEmpl = '"+idEmpl+"',idMesa = '"+idMesa+
                 "', fechHora ='"+fechHora+"', precioOrden =" +
-                "'"+precioOrden+"' WHERE idOrden = "+idOrden;
+                "'"+precioOrden+"', idMetodoPago = '"+idMetodoPago+"' WHERE idOrden = "+idOrden;
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
@@ -86,7 +97,7 @@ public class OrdenDAO {
         }
     }
     public void DELETE(){
-        String query="DELETE FROM orden where idOrden = "+idOrden;
+        String query="DELETE FROM Orden where idOrden = "+idOrden;
         try {
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
@@ -111,6 +122,7 @@ public class OrdenDAO {
                 objetoO.setIdMesa(res.getInt("idMesa"));
                 objetoO.setFechHora(res.getString("fechHora"));
                 objetoO.setPrecioOrden(res.getFloat("precioOrden"));
+                objetoO.setIdMetodoPago(res.getInt("idMetodoPago"));
                 listaO.add(objetoO);
             }
         }catch (Exception e){
