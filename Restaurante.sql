@@ -28,7 +28,7 @@ create table Empleado(
                          fechIngresoEmpl Date not null,
                          telEmpl char(10),
                          idPuesto int,
-                         password varchar(255),
+                         password varchar(96),
                          constraint EmpleadoPK primary key(idEmpl),
                          constraint EmpleadoFK1 foreign key (idPuesto) references Puesto(idPuesto)
 );
