@@ -50,7 +50,9 @@ create table Mesa(
 create table ReservacionMesa(
                                 idMesa int,
                                 idReservacion int,
-                                constraint ReservacionMesaPK primary key (idMesa,idReservacion)
+                                constraint ReservacionMesaPK primary key (idMesa,idReservacion),
+                                constraint ReservacionMesaFK1 foreign key (idMesa) references Mesa(idMesa),
+                                constraint ReservacionMesaFK2 foreign key (idReservacion) references Reservacion(idReservacion)
 );
 create table Orden(
                       idOrden int auto_increment,

@@ -56,13 +56,14 @@ public class ReservacionDAO {
         }
     }
     public void UPDATE(){
-        String query="UPDATE Reservacion set duracionRese = '"+duracionRese+"' horarioFechRese = '"+
-                horarioFechRese+"' idCte = '"+idCte+"' "+
+        String query="UPDATE Reservacion set duracionRese = '"+duracionRese+"' ,horarioFechRese = '"+
+                horarioFechRese+"' ,idCte = '"+idCte+"' "+
                 " WHERE idReservacion = "+idReservacion;
         try{
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
+            System.out.println(query);
             Selectores.creaAlerta();
         }
     }
