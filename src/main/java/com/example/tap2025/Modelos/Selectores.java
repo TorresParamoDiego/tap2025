@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Selectores {
+    public static boolean flag = false;
     public static void creaAlerta() {
+        flag = true;
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setTitle("Error al agregar");
         alerta.setHeaderText("No se pudo agregar el registro");

@@ -73,6 +73,7 @@ public class Restaurante extends Stage {
         pnlMetodosPago = new HBox(btnMetodosPago);
 
         btnTerminar= new Button("Terminar");
+
         btnTerminar.setOnAction(e -> {
             orden.setFechHora(Timestamp.valueOf(LocalDateTime.now())+"");
             orden.setIdEmpl(idEmpleado);
@@ -82,104 +83,113 @@ public class Restaurante extends Stage {
             agreProdDetaOrden();
 
             float total =(float) Selectores.calcPrecioOrden(idOrden);
-            orden.setPrecioOrden(total);
+            if(total==0) {
+                orden.setPrecioOrden(0.01f);
+                Selectores.flag=true;
+                Selectores.creaAlerta();
+            }
+            else {
+                orden.setPrecioOrden(total);
+                Selectores.flag = false;
+            }
             orden.UPDATE();
+            if(!Selectores.flag){
+                //ticket
+                try {
+                    //pdf
+                    String outputPath = "./ticket.pdf";
+                    Document document = new Document();
+                    PdfWriter.getInstance(document, new FileOutputStream(outputPath));
+                    document.open();
 
+                    document.add(new Paragraph("Ticket\n\n"));
 
-            //ticket
-            try {
-                //pdf
-                String outputPath = "./ticket.pdf";
-                Document document = new Document();
-                PdfWriter.getInstance(document, new FileOutputStream(outputPath));
-                document.open();
+                    PdfPTable ticket = new PdfPTable(2);
+                    ticket.setWidthPercentage(100);
+                    ticket.addCell("Fecha:");
+                    ticket.addCell(orden.getFechHora());
+                    ticket.addCell("Empleado:");
+                    ticket.addCell(nombre);
+                    ticket.addCell("Mesa:");
+                    ticket.addCell(idMesa+"");
+                    ticket.addCell("Cliente:");
+                    ticket.addCell(idCliente+"");
+                    ticket.addCell("Método de pago:");
+                    int metPag = orden.getIdMetodoPago();
+                    if(metPag == 1)
+                        ticket.addCell("Efectivo");
+                    else if (metPag == 2)
+                        ticket.addCell("Tarjeta");
 
-                document.add(new Paragraph("Ticket\n\n"));
+                    document.add(ticket);
+                    document.add(new Paragraph("\n"));
 
-                PdfPTable ticket = new PdfPTable(2);
-                ticket.setWidthPercentage(100);
-                ticket.addCell("Fecha:");
-                ticket.addCell(orden.getFechHora());
-                ticket.addCell("Empleado:");
-                ticket.addCell(nombre);
-                ticket.addCell("Mesa:");
-                ticket.addCell(idMesa+"");
-                ticket.addCell("Cliente:");
-                ticket.addCell(idCliente+"");
-                ticket.addCell("Método de pago:");
-                int metPag = orden.getIdMetodoPago();
-                if(metPag == 1)
-                    ticket.addCell("Efectivo");
-                else if (metPag == 2)
-                    ticket.addCell("Tarjeta");
+                    //productos
+                    document.add(new Paragraph("Órden:\n\n"));
 
-                document.add(ticket);
-                document.add(new Paragraph("\n"));
+                    PdfPTable productTable = new PdfPTable(3);
+                    productTable.setWidthPercentage(100);
+                    //float[] columnWidths = {3f, 1f, 1.5f, 1.5f}; //ancho
+                    //productTable.setWidths(columnWidths);
 
-                //productos
-                document.add(new Paragraph("Órden:\n\n"));
+                    productTable.addCell("Producto");
+                    productTable.addCell("Cant.");
+                    productTable.addCell("Precio Unit.");
+                    //productTable.addCell("Subtotal");
 
-                PdfPTable productTable = new PdfPTable(3);
-                productTable.setWidthPercentage(100);
-                //float[] columnWidths = {3f, 1f, 1.5f, 1.5f}; //ancho
-                //productTable.setWidths(columnWidths);
+                    //obtener los detalles de la orden
+                    ObservableList<DetalleOrdenDAO> detallesOrden = new DetalleOrdenDAO().SELECT();
+                    float totalOrden = 0;
 
-                productTable.addCell("Producto");
-                productTable.addCell("Cant.");
-                productTable.addCell("Precio Unit.");
-                //productTable.addCell("Subtotal");
+                    for (int i = 0; i < detallesOrden.size(); i++) {
+                        DetalleOrdenDAO detalle = detallesOrden.get(i);
+                        if (detalle.getIdOrden() == orden.getIdOrden()) {
+                            ObservableList<ProductoDAO> productos = new ProductoDAO().SELECT();
+                            for (int j = 0; j < productos.size(); j++) {
+                                ProductoDAO producto = productos.get(j);
+                                if (producto.getIdProducto() == detalle.getIdProducto()) {
+                                    float subtotal = producto.getPrecioProd() * detalle.getCantidad();
+                                    totalOrden += subtotal;
 
-                //obtener los detalles de la orden
-                ObservableList<DetalleOrdenDAO> detallesOrden = new DetalleOrdenDAO().SELECT();
-                float totalOrden = 0;
-
-                for (int i = 0; i < detallesOrden.size(); i++) {
-                    DetalleOrdenDAO detalle = detallesOrden.get(i);
-                    if (detalle.getIdOrden() == orden.getIdOrden()) {
-                        ObservableList<ProductoDAO> productos = new ProductoDAO().SELECT();
-                        for (int j = 0; j < productos.size(); j++) {
-                            ProductoDAO producto = productos.get(j);
-                            if (producto.getIdProducto() == detalle.getIdProducto()) {
-                                float subtotal = producto.getPrecioProd() * detalle.getCantidad();
-                                totalOrden += subtotal;
-
-                                productTable.addCell(producto.getNomProd());
-                                productTable.addCell(String.valueOf(detalle.getCantidad()));
-                                productTable.addCell("$" + String.format("%.2f", producto.getPrecioProd()));
-                                //productTable.addCell("$" + String.format("%.2f", subtotal));
+                                    productTable.addCell(producto.getNomProd());
+                                    productTable.addCell(String.valueOf(detalle.getCantidad()));
+                                    productTable.addCell("$" + String.format("%.2f", producto.getPrecioProd()));
+                                    //productTable.addCell("$" + String.format("%.2f", subtotal));
+                                }
                             }
                         }
                     }
+
+                    document.add(productTable);
+                    document.add(new Paragraph("\n"));
+
+
+                    PdfPTable totalTable = new PdfPTable(2);
+                    totalTable.setWidthPercentage(100);
+                    totalTable.addCell("TOTAL:");
+                    totalTable.addCell("$" + String.format("%.2f", totalOrden));
+
+                    document.add(totalTable);
+                    document.close();
+
+                    //this.close();
+                    //abrir pdf
+                    File file = new File(outputPath);
+                    Desktop.getDesktop().open(file);
+
+                } catch (DocumentException | IOException ex) {
+                    ex.printStackTrace();
                 }
-
-                document.add(productTable);
-                document.add(new Paragraph("\n"));
-
-
-                PdfPTable totalTable = new PdfPTable(2);
-                totalTable.setWidthPercentage(100);
-                totalTable.addCell("TOTAL:");
-                totalTable.addCell("$" + String.format("%.2f", totalOrden));
-
-                document.add(totalTable);
-                document.close();
-
-                //this.close();
-                //abrir pdf
-                File file = new File(outputPath);
-                Desktop.getDesktop().open(file);
-
-            } catch (DocumentException | IOException ex) {
-                ex.printStackTrace();
+                orden.UPDATE();
+                orden.INSERT();
             }
-            orden.UPDATE();
-            orden.INSERT();
+            else
+                Selectores.flag = false;
             orden=orden.SELECT().get(orden.SELECT().size()-1);
-            orden.setPrecioOrden(0.1f);
+            orden.setPrecioOrden(0.001f);
             idOrden=orden.getIdOrden();
             tbvOrden.getItems().clear();
         });
-
         tbvProductos = new TableView<ProductoDAO>();
         tbvOrden = new TableView<ProductoOrden>();
         creaTablaProductos(0);
