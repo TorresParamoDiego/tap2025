@@ -36,6 +36,7 @@ public class ListaPuestos extends Stage {
         creaTabla();
         vBox = new VBox(tlbMenu, tblPuestos);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
     private void creaTabla(){
         PuestoDAO objC = new PuestoDAO();

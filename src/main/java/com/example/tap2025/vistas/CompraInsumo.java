@@ -54,5 +54,6 @@ public class CompraInsumo extends Stage {
         });
         vBox = new VBox(txtIdInsumo,txtCantidad,txtFecha,txtCantidad,btnGuardar);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
 }

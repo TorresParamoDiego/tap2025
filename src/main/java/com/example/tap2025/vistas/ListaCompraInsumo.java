@@ -37,6 +37,7 @@ public class ListaCompraInsumo extends Stage {
         crearTabla();
         vBox = new VBox(tlbMenu,tblCompraInsumos);
         escena = new Scene(vBox,600,500);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
     private void crearTabla(){
         CompraInsumosDAO objC = new CompraInsumosDAO();

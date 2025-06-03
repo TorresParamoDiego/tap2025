@@ -60,5 +60,6 @@ public class Proovedor extends Stage {
         });
         vBox = new VBox(txtNombre,txtEmail,txtDireccion,txtDescripcion,btnGuardar);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
 }

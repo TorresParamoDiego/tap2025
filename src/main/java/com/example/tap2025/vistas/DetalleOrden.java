@@ -50,5 +50,6 @@ public class DetalleOrden extends Stage {
         });
         vBox = new VBox(txtIdOrden,txtIdProducto,btnGuardar);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
 }

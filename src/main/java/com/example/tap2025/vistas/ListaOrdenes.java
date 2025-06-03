@@ -33,6 +33,7 @@ public class ListaOrdenes extends Stage {
         creaTabla();
         vBox = new VBox(tlbMenu, tblOrdenes);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
     private void creaTabla(){
         OrdenDAO objC = new OrdenDAO();

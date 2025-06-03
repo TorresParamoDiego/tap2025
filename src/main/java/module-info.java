@@ -10,9 +10,10 @@ module com.example.tap2025 {
     exports com.example.tap2025;
     requires mysql.connector.j;
     requires java.sql;
-    opens com.example.tap2025.Modelos;
-    opens com.example.tap2025.Componentes;
     requires de.mkammerer.argon2.nolibs;
     requires itextpdf;
     requires org.jfree.jfreechart;
+    opens com.example.tap2025.Modelos;
+    opens com.example.tap2025.Componentes;
+
 }

@@ -54,5 +54,6 @@ public class Insumo extends Stage {
         });
         vBox = new VBox(txtNombre,txtPrecio,txtIdProveedor,btnGuardar);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
 }

@@ -62,5 +62,6 @@ public class Orden extends Stage {
         });
         vBox = new VBox(txtIdCte,txtIdEmpl,txtIdMesa,txtFechOrden, txtMetodoPago,btnGuardar);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
 }

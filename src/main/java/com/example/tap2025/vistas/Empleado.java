@@ -87,6 +87,7 @@ public class Empleado extends Stage {
         vBox = new VBox(txtNombre,txtTelefono,txtRFC,
                 txtCurp,txtNss,txtfechIngreso,txthorarioEntrada,txthorarioSalida,txtIdPuesto, txtPass,btnGuardar);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
 
     String hashPassword(String pass){

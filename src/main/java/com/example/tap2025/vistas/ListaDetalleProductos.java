@@ -33,6 +33,7 @@ public class ListaDetalleProductos extends Stage {
         creaTabla();
         vBox = new VBox(tlbMenu, tblDetalleProductos);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
     private void creaTabla(){
         DetalleProductoDAO objC = new DetalleProductoDAO();

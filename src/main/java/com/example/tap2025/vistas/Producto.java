@@ -62,5 +62,6 @@ public class Producto extends Stage {
         });
         vBox = new VBox(txtNombre,txtPrecio,txtCosto,txtUrlImagen,txtCategoria,btnGuardar);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
 }

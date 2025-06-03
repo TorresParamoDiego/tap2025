@@ -23,12 +23,15 @@ public class RestauranteAdmin extends Stage{
     private MenuBar menBar;
     private VBox vbox;
     private Scene scene;
+    private MenuItem mitComIns;
 
     public void creaUI(){
         mitCat = new MenuItem("Categorias");
         mitCat.setOnAction(e -> new ListaCategorias());
         mitCte = new MenuItem("Clientes");
         mitCte.setOnAction(e -> new ListaClientes());
+        mitComIns=new MenuItem("Compra insumos");
+        mitComIns.setOnAction(e->new ListaCompraInsumo());
         mitDetOrd = new MenuItem("Detalle Ordenes");
         mitDetOrd.setOnAction(e -> new ListaDetalleOrdenes());
         mitDetPro = new MenuItem("Detalle Productos");
@@ -52,7 +55,7 @@ public class RestauranteAdmin extends Stage{
         mitPst = new MenuItem("Puestos");
         mitPst.setOnAction(e -> new ListaPuestos());
         menTablas = new Menu("Tablas");
-        menTablas.getItems().addAll(mitCat,mitCte,mitDetOrd,mitDetPro,mitEmp,mitIns,mitMsa
+        menTablas.getItems().addAll(mitCat,mitCte,mitComIns,mitDetOrd,mitDetPro,mitEmp,mitIns,mitMsa
                 ,mitRes,mitResMsa,mitPro,mitPrv,mitPst,mitOdn);
 
         mitReporte = new MenuItem("Generar reporte de órdenes");
@@ -103,6 +106,8 @@ public class RestauranteAdmin extends Stage{
         vbox = new VBox();
         vbox.getChildren().addAll(menBar);
         scene = new Scene(vbox);
+        scene.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
+
     }
     public RestauranteAdmin(){
         creaUI();

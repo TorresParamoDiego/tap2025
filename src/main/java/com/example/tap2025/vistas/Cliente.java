@@ -59,6 +59,7 @@ public class Cliente extends Stage {
         });
         vBox = new VBox(txtNomCte,txtDireccion,txtTelCte,txtEmail,btnGuardar);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
 }
 /* la forma de comunicar objetos es por metodos

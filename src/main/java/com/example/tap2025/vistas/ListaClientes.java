@@ -33,6 +33,7 @@ public class ListaClientes extends Stage {
         crearTabla();
         vBox = new VBox(tlbMenu,tblClientes);
         escena = new Scene(vBox,600,500);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
     private void crearTabla(){
         ClientesDAO objC = new ClientesDAO();

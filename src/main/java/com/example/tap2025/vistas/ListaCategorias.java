@@ -36,6 +36,7 @@ public class ListaCategorias extends Stage {
         creaTabla();
         vBox = new VBox(tlbMenu, tblCategorias);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
     private void creaTabla(){
         CategoriaDAO objC = new CategoriaDAO();

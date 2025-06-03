@@ -1,25 +1,193 @@
-.button{
+
+.button {
     -fx-background-color: #a9360c;
     -fx-text-fill: white;
-    -fx-border-color:black;
+    -fx-border-color: black;
     -fx-border-radius: 30;
-    -fx-background-radius:30;
+    -fx-background-radius: 30;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
 }
-.button:hover{
+.button:hover {
     -fx-background-color: #ffb61d;
+    -fx-text-fill: black;
 }
-.table-view{
+.button:pressed {
+    -fx-background-color: #843109;
+}
+
+
+/* === TABLAS === */
+.table-view {
     -fx-background-color: #fad88d;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-table-cell-border-color: black;
+    -fx-padding: 10;
 }
-.table-view .table-cell{
+.table-view .column-header {
+    -fx-background-color: #6c0505;
+}
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-border-color: black;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-font-size: 16px;
+}
+.table-view .table-cell {
     -fx-background-color: #da442c;
     -fx-text-fill: white;
     -fx-border-color: black;
     -fx-font-size: 15px;
+    -fx-alignment: CENTER_LEFT;
+}
+.table-view .table-cell:hover {
+    -fx-background-color: #ffb61d;
+    -fx-text-fill: black;
+}
+.table-view .table-row-cell:selected {
+    -fx-background-color: #ffb61d;
+    -fx-text-fill: black;
+}
+.table-view .table-cell:empty {
+    -fx-background-color: #fad88d;
+}
+.table-view .table-row-cell:odd {
+    -fx-background-color: #f5c376;
+}
+.table-view .table-row-cell:even {
+    -fx-background-color: #fad88d;
 }
 
-.table-view .column-header .label {
+
+/* === MENÚS === */
+.menu-bar {
+    -fx-background-color: #6c0505;
+}
+.menu-bar .label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+.menu-bar .label:hover {
+    -fx-text-fill: #ffb61d;
+}
+.menu {
+    -fx-background-color: #6c0505;
+}
+.menu-item {
+    -fx-background-color: #da442c;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+}
+.menu-item:hover {
+    -fx-background-color: #ffb61d;
+    -fx-text-fill: black;
+}
+
+
+/* === TEXTFIELD === */
+.text-field {
+    -fx-background-color: #fff5e1;
+    -fx-text-fill: black;
+    -fx-border-color: #a9360c;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5 10;
+}
+.text-field:focused {
+    -fx-border-color: #ffb61d;
+}
+.text-field:hover {
+    -fx-border-color: #ffb61d;
+}
+
+
+/* === TEXTAREA === */
+.text-area {
+    -fx-background-color: #fff5e1;
+    -fx-text-fill: black;
+    -fx-border-color: #a9360c;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+.text-area:focused {
+    -fx-border-color: #ffb61d;
+}
+.text-area:hover {
+    -fx-border-color: #ffb61d;
+}
+
+
+/* === LABELS === */
+.label {
+    -fx-text-fill: #6c0505;
+    -fx-font-size: 14px;
+}
+.label:hover {
+    -fx-text-fill: #da442c;
+}
+
+
+/* === SCROLLBAR === */
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+    -fx-background-color: #f5d08d;
+}
+.scroll-bar .thumb {
+    -fx-background-color: #a9360c;
+    -fx-background-radius: 10;
+}
+.scroll-bar .thumb:hover {
+    -fx-background-color: #ffb61d;
+}
+
+
+/* === CHECKBOX === */
+.check-box {
+    -fx-text-fill: #6c0505;
+}
+.check-box .box {
+    -fx-border-color: #a9360c;
+    -fx-background-color: #fff5e1;
+}
+.check-box:selected .box {
+    -fx-background-color: #ffb61d;
+}
+.check-box:hover .box {
+    -fx-border-color: #ffb61d;
+}
+
+
+/* === COMBOBOX === */
+.combo-box {
+    -fx-background-color: #fff5e1;
+    -fx-border-color: #a9360c;
+    -fx-border-radius: 5;
+}
+.combo-box .list-cell {
+    -fx-text-fill: black;
+}
+.combo-box:hover {
+    -fx-border-color: #ffb61d;
+}
+
+
+/* === TOOLTIP === */
+.tooltip {
     -fx-background-color: #6c0505;
     -fx-text-fill: white;
+    -fx-padding: 5;
+    -fx-font-size: 12px;
     -fx-border-color: black;
+}
+
+
+/* === FONDO GENERAL === */
+.root {
+    -fx-background-image: url("../Images/restaurante.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
 }

@@ -54,5 +54,6 @@ public class Categoria extends Stage {
         });
         vBox = new VBox(txtNombre,txtDescripcion,btnGuardar);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
 }

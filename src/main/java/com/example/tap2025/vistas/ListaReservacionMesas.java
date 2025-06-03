@@ -33,6 +33,7 @@ public class ListaReservacionMesas extends Stage {
         creaTabla();
         vBox = new VBox(tlbMenu, tblReservacionMesas);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
     private void creaTabla(){
         ReservacionMesaDAO objC = new ReservacionMesaDAO();

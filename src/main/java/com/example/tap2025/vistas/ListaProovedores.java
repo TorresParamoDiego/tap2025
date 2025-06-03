@@ -34,6 +34,7 @@ public class ListaProovedores extends Stage {
         creaTabla();
         vBox = new VBox(tlbMenu, tblProveedores);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
     private void creaTabla(){
         ProveedorDAO objC = new ProveedorDAO();

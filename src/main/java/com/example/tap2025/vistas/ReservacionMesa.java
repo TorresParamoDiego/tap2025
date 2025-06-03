@@ -50,5 +50,6 @@ public class ReservacionMesa extends Stage {
         });
         vBox = new VBox(txtIdReservacion,txtIdMesa,btnGuardar);
         escena = new Scene(vBox);
+        escena.getStylesheets().add(getClass().getResource("/Styles/Restaurante.css").toExternalForm());
     }
 }
