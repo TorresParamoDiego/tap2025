@@ -125,7 +125,7 @@ public class Restaurante extends Stage {
                     document.add(new Paragraph("\n"));
 
                     //productos
-                    document.add(new Paragraph("Órden:\n\n"));
+                    document.add(new Paragraph("Orden:\n\n"));
 
                     PdfPTable productTable = new PdfPTable(3);
                     productTable.setWidthPercentage(100);

@@ -151,45 +151,48 @@ public class Login extends Stage {
     }
 
     private void validarLogin() {
+        boolean datosCorrectos = true;
         if (inputUsuario.length() == 0) {
             lblStatusMessage.setText("Ingrese el ID de empleado");
-            return;
+            datosCorrectos = false;
         }
-        if (inputPass.length() == 0) {
+        else if (inputPass.length() == 0) {
             lblStatusMessage.setText("Ingrese la contraseña");
-            return;
+            datosCorrectos = false;
         }
 
-        String usuarioLimpio = inputUsuario.toString().trim().replace("\n", "").replace("\r", "");
-        String passwordLimpio = inputPass.toString().trim().replace("\n", "").replace("\r", "");
+        if (datosCorrectos) {
+            String usuarioLimpio = inputUsuario.toString().trim().replace("\n", "").replace("\r", "");
+            String passwordLimpio = inputPass.toString().trim().replace("\n", "").replace("\r", "");
 
-        int idEmpl;
-        try {
-            idEmpl = Integer.parseInt(usuarioLimpio);
-        } catch (NumberFormatException e) {
-            lblStatusMessage.setText("Tu ID es incorrecto");
-            return;
+            int idEmpl;
+            try {
+                idEmpl = Integer.parseInt(usuarioLimpio);
+            } catch (NumberFormatException e) {
+                lblStatusMessage.setText("Tu ID es incorrecto");
+                return;
+            }
+
+            EmpleadoDAO empleado = new EmpleadoDAO();
+            ObservableList<EmpleadoDAO> lista = empleado.SELECT();
+            for (EmpleadoDAO emp : lista)
+                if (emp.getIdEmpl() == idEmpl)
+                    if (verificarPassword(passwordLimpio, emp.getPassword())) {
+                        this.close();
+
+                        //det usuario
+                        if (idEmpl == 1)
+                            new RestauranteAdmin();
+                        else
+                            new Restaurante(idEmpl, emp.getNomEmpl());
+                        return;
+                    } else {
+                        lblStatusMessage.setText("Contraseña incorrecta");
+                        return;
+                    }
+
+            lblStatusMessage.setText("Empleado no encontrado");
         }
-
-        EmpleadoDAO empleado = new EmpleadoDAO();
-        ObservableList<EmpleadoDAO> lista = empleado.SELECT();
-        for (EmpleadoDAO emp : lista)
-            if (emp.getIdEmpl() == idEmpl)
-                if (verificarPassword(passwordLimpio, emp.getPassword())) {
-                    this.close();
-
-                    //det usuario
-                    if (idEmpl == 1)
-                        new RestauranteAdmin();
-                    else
-                        new Restaurante(idEmpl, emp.getNomEmpl());
-                    return;
-                } else {
-                    lblStatusMessage.setText("Contraseña incorrecta");
-                    return;
-                }
-
-        lblStatusMessage.setText("Empleado no encontrado");
     }
 
     private boolean verificarPassword(String pass, String hash) {
