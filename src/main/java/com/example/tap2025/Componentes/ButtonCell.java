@@ -9,6 +9,7 @@ import com.example.tap2025.Modelos.DetalleProductoDAO;
 import com.example.tap2025.Modelos.EmpleadoDAO;
 import com.example.tap2025.Modelos.InsumoDAO;
 import com.example.tap2025.Modelos.MesaDAO;
+import com.example.tap2025.Modelos.MetodosPagoDAO;
 import com.example.tap2025.Modelos.OrdenDAO;
 import com.example.tap2025.Modelos.ProductoDAO;
 import com.example.tap2025.Modelos.ProveedorDAO;
@@ -23,6 +24,7 @@ import com.example.tap2025.vistas.DetalleProducto;
 import com.example.tap2025.vistas.Empleado;
 import com.example.tap2025.vistas.Insumo;
 import com.example.tap2025.vistas.Mesa;
+import com.example.tap2025.vistas.MetodoPago;
 import com.example.tap2025.vistas.Orden;
 import com.example.tap2025.vistas.Producto;
 import com.example.tap2025.vistas.Proovedor;
@@ -72,6 +74,7 @@ public class ButtonCell extends TableCell<Object,String>{
         ReservacionMesaDAO objRM=null;
         PuestoDAO objPU=null;
         ProveedorDAO objPV=null;
+        MetodosPagoDAO objM1=null;
         if(obj instanceof ClientesDAO) {
             objC=(ClientesDAO)obj;
             control=1;
@@ -127,6 +130,9 @@ public class ButtonCell extends TableCell<Object,String>{
         } else if (obj instanceof CompraInsumosDAO ) {
             objC3=(CompraInsumosDAO)obj;
             control=14;
+        } else if (obj instanceof MetodosPagoDAO) {
+            objM1=(MetodosPagoDAO) obj;
+            control=15;
         }
 
         if(strLableBtn.equals("Editar")){
@@ -145,6 +151,7 @@ public class ButtonCell extends TableCell<Object,String>{
                 case 12->  new Reservacion(this.getTableView(), objR);
                 case 13->  new ReservacionMesa(this.getTableView(), objRM);
                 case 14->  new CompraInsumo(this.getTableView(), objC3);
+                case 15-> new MetodoPago(this.getTableView(),objM1);
             }
         }
         else {
@@ -209,6 +216,10 @@ public class ButtonCell extends TableCell<Object,String>{
                     case 14->{
                         objC3.DELETE();
                         lista=FXCollections.observableArrayList(objC3.SELECT());
+                    }
+                    case 15->{
+                        objM1.DELETE();
+                        lista=FXCollections.observableArrayList(objM1.SELECT());
                     }
                 }
             }

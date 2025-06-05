@@ -50,9 +50,7 @@ create table Mesa(
 create table ReservacionMesa(
                                 idMesa int,
                                 idReservacion int,
-                                constraint ReservacionMesaPK primary key (idMesa,idReservacion),
-                                constraint ReservacionMesaFK1 foreign key (idMesa) references Mesa(idMesa),
-                                constraint ReservacionMesaFK2 foreign key (idReservacion) references Reservacion(idReservacion)
+                                constraint ReservacionMesaPK primary key (idMesa,idReservacion)
 );
 create table Orden(
                       idOrden int auto_increment,
@@ -81,15 +79,17 @@ create table Insumo(
                        idInsumo int auto_increment,
                        nomIns varchar(100),
                        precioIns Decimal(10,2) not null,
+                       cantidad int,
                        idProveedor int,
                        constraint InsumoPK primary key (idInsumo),
                        constraint InsumoFK1 foreign key (idProveedor) references Proveedor(idProveedor),
-                       constraint InsumoCH1 check (precioIns>0)
+                       constraint InsumoCH1 check (precioIns>0),
+                       constraint InsumoCH2 check (cantidad>0)
 );
 create table Categoria(
                           idCategoria int auto_increment,
                           nomCategoria varchar(100),
-                          descripcionCategoria varchar(50),
+                          descripcionCategoria Text,
                           constraint CategoriaPK primary key (idCategoria)
 );
 create table Producto(

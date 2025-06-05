@@ -35,6 +35,7 @@ public class CategoriaDAO {
     public void setDescripcionCategoria(String descripcionCategoria) {
         this.descripcionCategoria = descripcionCategoria;
     }
+
     public void INSERT()  {
         String query="INSERT INTO Categoria (nomCategoria,descripcionCategoria) " +
                 "values('"+nomCategoria+"','"+descripcionCategoria+"')";

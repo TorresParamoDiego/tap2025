@@ -14,3 +14,4 @@ Mediano: 175 segundos
 Grande: 198 segundos
 Mediano: 23 segundos
 Pequeño: 3 segundos
+Mediano: 33 segundos

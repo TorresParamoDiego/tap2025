@@ -64,10 +64,6 @@ public class InsumoDAO {
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
-            System.out.println(idInsumo);
-            System.out.println(nomIns);
-            System.out.println(precioIns);
-            System.out.println(idProveedor);
             Selectores.creaAlerta();
             e.printStackTrace();
         }

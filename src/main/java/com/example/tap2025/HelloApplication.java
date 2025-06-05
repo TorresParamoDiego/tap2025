@@ -49,9 +49,9 @@ public class HelloApplication extends Application {
         creaUI();
         stage.setTitle("Hola Mundo de Eventos ʕ•́ᴥ•̀ʔっ");
         stage.setScene(escena);
-        //stage.show();
+        stage.show();
         //new RestauranteAdmin();
-        new Restaurante(2, "");
+        //new Restaurante(2, "");
         stage.setMaximized(true);
         stage.setOnCloseRequest(event -> {
             try {
