@@ -93,6 +93,7 @@ public class OrdenDAO {
             Statement stmt=Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         } catch (Exception e) {
+            System.out.println(query+"\n\n");
             Selectores.creaAlerta();
         }
     }

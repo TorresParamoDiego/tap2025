@@ -55,8 +55,10 @@ public class RestauranteAdmin extends Stage{
         mitPst = new MenuItem("Puestos");
         mitPst.setOnAction(e -> new ListaPuestos());
         menTablas = new Menu("Tablas");
+        MenuItem mitMet=new MenuItem("Metodos Pago");
+        mitMet.setOnAction(e->new ListaMetodoPago());
         menTablas.getItems().addAll(mitCat,mitCte,mitComIns,mitDetOrd,mitDetPro,mitEmp,mitIns,mitMsa
-                ,mitRes,mitResMsa,mitPro,mitPrv,mitPst,mitOdn);
+                ,mitMet,mitRes,mitResMsa,mitPro,mitPrv,mitPst,mitOdn);
 
         mitReporte = new MenuItem("Generar reporte de órdenes");
         mitReporte.setOnAction(event -> new GenerarReporte());

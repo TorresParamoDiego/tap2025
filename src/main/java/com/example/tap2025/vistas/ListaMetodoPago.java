@@ -29,7 +29,7 @@ public class ListaMetodoPago extends Stage {
     private void creaUI(){
         tblMetodos = new TableView<>();
         btnAgregar = new Button("Agregar");
-        btnAgregar.setOnAction(e -> new ReservacionMesa(tblMetodos,null));
+        btnAgregar.setOnAction(e -> new MetodoPago(tblMetodos,null));
         tlbMenu = new ToolBar(btnAgregar);
         creaTabla();
         vBox = new VBox(tlbMenu, tblMetodos);

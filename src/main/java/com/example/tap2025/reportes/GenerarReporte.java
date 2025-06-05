@@ -23,7 +23,7 @@ public class GenerarReporte {
             String query = "SELECT o.idOrden, o.idCte, o.idEmpl, o.idMesa, o.precioOrden, o.fechHora, e.nomEmpl, m.descripcion " +
                     "FROM orden o JOIN empleado e ON o.idEmpl = e.idEmpl " +
                     "JOIN metodopago m ON o.idMetodoPago = m.idMetodoPago " +
-                    "ORDER BY fechHora";
+                    "ORDER BY fechHora DESC";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 

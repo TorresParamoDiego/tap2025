@@ -84,7 +84,7 @@ public class Restaurante extends Stage {
 
             float total =(float) Selectores.calcPrecioOrden(idOrden);
             if(total==0) {
-                orden.setPrecioOrden(0.01f);
+                orden.setPrecioOrden(0.1f);
                 Selectores.flag=true;
                 Selectores.creaAlerta();
             }
@@ -186,7 +186,7 @@ public class Restaurante extends Stage {
             else
                 Selectores.flag = false;
             orden=orden.SELECT().get(orden.SELECT().size()-1);
-            orden.setPrecioOrden(0.001f);
+            orden.setPrecioOrden(0.01f);
             idOrden=orden.getIdOrden();
             tbvOrden.getItems().clear();
         });
@@ -386,14 +386,15 @@ public class Restaurante extends Stage {
         this.setMaximized(true);
         idCliente=1;
         idMesa=1;
+        idMetodoPago = 1;
         orden=new OrdenDAO();
         orden.setFechHora(Timestamp.valueOf(LocalDateTime.now())+"");
-        orden.setIdCte(1);
+        orden.setIdCte(idCliente);
         orden.setIdEmpl(idEmpleado);
-        orden.setIdMesa(1);
-        idMetodoPago = 1;
-        orden.setPrecioOrden(0.00000000001F);
-        //orden.INSERT();
+        orden.setIdMesa(idMesa);
+        orden.setIdMetodoPago(idMetodoPago);
+        orden.setPrecioOrden(0.01f);
+        orden.INSERT();
         orden=orden.SELECT().get(orden.SELECT().size()-1);
         idOrden=orden.getIdOrden();
 
