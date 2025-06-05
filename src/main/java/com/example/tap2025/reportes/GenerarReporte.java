@@ -20,8 +20,10 @@ public class GenerarReporte {
             Connection connection = Conexion.connection;
 
             //ordenes
-            String query = "SELECT o.idOrden, o.idCte, o.idEmpl, o.idMesa, o.precioOrden, o.fechHora, e.nomEmpl " +
-                    "FROM orden o JOIN empleado e ON o.idEmpl = e.idEmpl ORDER BY fechHora";
+            String query = "SELECT o.idOrden, o.idCte, o.idEmpl, o.idMesa, o.precioOrden, o.fechHora, e.nomEmpl, m.descripcion " +
+                    "FROM orden o JOIN empleado e ON o.idEmpl = e.idEmpl " +
+                    "JOIN metodopago m ON o.idMetodoPago = m.idMetodoPago " +
+                    "ORDER BY fechHora";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
@@ -40,8 +42,9 @@ public class GenerarReporte {
                 String nombre = rs.getString("nomEmpl");
                 float precioOrden = rs.getFloat("precioOrden");
                 String fechHora = rs.getTimestamp("fechHora")+"";
+                String metodoPago = rs.getString("descripcion");
 
-                PdfPTable infoOrden = new PdfPTable(6);
+                PdfPTable infoOrden = new PdfPTable(7);
                 infoOrden.setSpacingBefore(10);
                 infoOrden.addCell("IDOrden");
                 infoOrden.addCell("IDCliente");
@@ -49,12 +52,14 @@ public class GenerarReporte {
                 infoOrden.addCell("IDMesa");
                 infoOrden.addCell("Precio");
                 infoOrden.addCell("FechaHora");
+                infoOrden.addCell("MetodoPago");
                 infoOrden.addCell(String.valueOf(idOrden));
                 infoOrden.addCell(String.valueOf(idCte));
                 infoOrden.addCell(String.valueOf(nombre));
                 infoOrden.addCell(String.valueOf(idMesa));
                 infoOrden.addCell(String.format("%.2f", precioOrden));
                 infoOrden.addCell(fechHora);
+                infoOrden.addCell(metodoPago);
                 document.add(infoOrden);
 
                 //detalles

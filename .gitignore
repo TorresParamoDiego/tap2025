@@ -9,6 +9,7 @@ target/
 .idea/compiler.xml
 .idea/libraries/
 src/main/java/com/example/tap2025/Modelos/Conexion.java
+reporteteams.odt
 *.iws
 *.iml
 *.ipr

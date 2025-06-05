@@ -4,7 +4,6 @@ import com.example.tap2025.Modelos.Conexion;
 import com.example.tap2025.vistas.Calculadora;
 import com.example.tap2025.vistas.Celayork;
 import com.example.tap2025.vistas.Login;
-import com.example.tap2025.vistas.Restaurante;
 import com.example.tap2025.vistas.Rompecabezas;
 import javafx.application.Application;
 import javafx.scene.Scene;
