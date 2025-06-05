@@ -130,9 +130,12 @@ public class ButtonCell extends TableCell<Object,String>{
         } else if (obj instanceof CompraInsumosDAO ) {
             objC3=(CompraInsumosDAO)obj;
             control=14;
+            lista = FXCollections.observableArrayList(objC3.SELECT());
         } else if (obj instanceof MetodosPagoDAO) {
             objM1=(MetodosPagoDAO) obj;
             control=15;
+            lista = FXCollections.observableArrayList(objM1.SELECT());
+
         }
 
         if(strLableBtn.equals("Editar")){

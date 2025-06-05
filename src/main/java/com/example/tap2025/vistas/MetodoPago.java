@@ -17,7 +17,7 @@ public class MetodoPago extends Stage {
     private Scene escena;
     private MetodosPagoDAO objC;
     private TableView tblMetodo;
-    public MetodoPago(TableView<Object> tblMetodo, MetodosPagoDAO objC) {
+    public MetodoPago(TableView tblMetodo, MetodosPagoDAO objC) {
         this.tblMetodo = tblMetodo;
         creaUI();
         if(objC == null) {

@@ -1,10 +1,7 @@
 package com.example.tap2025.Componentes;
 
-import com.example.tap2025.Modelos.DetalleOrdenDAO;
 import com.example.tap2025.Modelos.OrdenDAO;
 import com.example.tap2025.Modelos.ProductoDAO;
-import com.example.tap2025.Modelos.Selectores;
-import com.example.tap2025.vistas.Restaurante;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
